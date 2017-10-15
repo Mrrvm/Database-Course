@@ -1,0 +1,240 @@
+Ex1)
+
+book(ISBN, year, title, price)
+	publisher_name: FK(publisher)
+
+// Assuming a book only has one publisher
+publisher(name, address, phone, URL)
+
+published_by(isbm name)
+	ISBN: FK(book)
+	name: FK(publisher)
+
+author(name, address, URL)
+
+written-by(ISBN, name, address)
+	ISBN: FK(book)
+	name: FK(author)
+
+customer(email, customer_name, address, phone)
+
+shopping_basket(basket_ID)
+
+basket_of(email, basket_ID)
+	email: FK(customer)
+	basket_ID: FK(shopping_basket)
+
+contains(basket_ID, ISBN, number)
+	ISBN: FK(book)
+	basket_ID: FK(shopping_basket)
+
+warehouse(code, address, phone)
+
+stocks(ISBN, code, number)
+	ISBN: FK(book)
+	code: FK(warehouse)
+
+
+//////////////////////////////////////////////////////
+Ex2)
+
+student(sid, name, program)
+
+course_offerings(courseno, year, semester, time, secno, room)
+
+enrols(sid, courseno, year, semester, grade)
+	sid: FK(student)
+	courseno: FK(course)
+	year: FK(course_offerings)
+	semester: FK(course_offerings)
+
+instructor(idd, name, dept, title)
+
+teaches(iid, courseno, year, semester)
+	iid: FK(instructor)
+	courseno: FK(course)
+	year: FK(course_offerings)
+	semester: FK(course_offerings)
+
+course(courseno, title, credits, syllabus)
+
+requires(maincourse, prerequisite)
+	maincourse: FK(course)
+	prerequisite: FK(course)
+
+//////////////////////////////////////////////////////
+Ex3)
+
+Car(License, Manufacturer, Model, Year)
+
+Client(ID, Name, Address, Phone)
+
+Employee(Number, Name)
+
+Mechanic(Number)
+
+Salesman(Number)
+
+RepairJob(License, Number, Description, Parts, Work)
+	License: FK(Car)
+	
+Does(Employee_Number, RepairJob_Number, License)
+	Employee_Number: FK(Employee)
+	RepairJob_Number: FK(RepairJob)
+	License: FK(Car)
+
+Buys(Employee_Number, ID, License, Price, Date, Value)
+	Employee_Number: FK(Employee)
+	ID: FK(Client)
+
+Sells(Employee_Number, ID, License, Comission, Date, Value)
+	Employee_Number: FK(Employee)
+	ID: FK(Client)
+	License: FK(Car)
+
+
+//////////////////////////////////////////////////////
+Ex4)
+
+Book(isbn, title, publisher, year)
+
+Person(name, birthday, city, country)
+
+Author(name)
+	name: FK(Person)
+
+Director(name)
+	name: FK(Person)
+
+Actor(name)
+	name: FK(Person)
+
+relatives(name1, name2, relationship)
+	name1,2: FK(Person)
+
+written_by(name, isbn)
+	name: FK(Author)
+	isbn: FK(Book)
+
+owns(company, name)
+	name: FK(Person)
+	company: FK(Studio)
+
+based_on(isbn, title, year)
+	title, year: FK(Movie)
+	isbn: FK(Book)
+
+Studio(company, country)
+
+Movie(title, year, rating, length, name)
+	name: FK(Director)
+
+Releases(title, year, country, date)
+	title, year: FK(Movie)
+
+participates(title, year, name, role, company, salary)
+	title, year. FK(Movie)
+	name: FK(Actor)
+	company: FK(Studio)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
