@@ -140,6 +140,13 @@ GROUP BY    branch.branch_name
 HAVING      COUNT(account.account_number) = 0
 ORDER BY    branch.branch_city;
 
+or
+
+SELECT      branch.branch_name, branch_city, account_number
+FROM        branch LEFT OUTER JOIN account
+            ON branch.branch_name = account.branch_name
+WHERE       account.account_number IS NULL;
+
 /*
 +-------------+-------------+
 | branch_city | branch_name |
@@ -235,6 +242,16 @@ SELECT  branch_name
 FROM    branch
 WHERE   branch.branch_name NOT IN (SELECT   branch_name
                                     FROM    loan);
+
+or 
+
+SELECT  branch_name 
+FROM    branch
+WHERE   branch_name NOT IN (SELECT  branch_name 
+                            FROM account
+                            WHERE  branch_name 
+                            IN (SELECT branch_name 
+                                 FROM loan));
 /*
 +-------------+
 | branch_name |
@@ -297,9 +314,16 @@ GROUP BY    customer_name;
 
 -- 15.
 SELECT      customer_name
-FROM        loan, borrower
+FROM        borrower, loan
 WHERE       loan.loan_number = borrower.loan_number
-/*
+GROUP BY    customer_name
+HAVING      sum(amount) >= ALL (SELECT sum(amount)
+                                FROM borrower, loan
+                                WHERE loan.loan_number = borrower.loan_number
+                                GROUP BY customer_name);
 
-
-*/
++---------------+
+| customer_name |
++---------------+
+| Smith         |
++---------------+
