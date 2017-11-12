@@ -146,47 +146,52 @@ DROP FUNCTION if exists is_dates_ok;
 
 delimiter $$
 CREATE FUNCTION is_dates_ok(new_start date, new_end date, device_snum varchar(255), device_manuf varchar(255))
-	RETURNS int
-	BEGIN
-		DECLARE ret_value int default 1;
-		DECLARE done int default 0;
-		DECLARE my_cursor cursor for select * from Wears;
-		DECLARE continue handler for not found set done = 1;
-		OPEN my_cursor;
-		my_loop: loop
-			FETCH my_cursor INTO snum, manuf, p_start, p_end;
-			IF done THEN LEAVE my_loop; END IF;
-			IF snum = device_snum THEN
-				IF manuf = device_manuf THEN
-					IF p_end >= new_start THEN
-						ret_value = 0;
-					END IF;
-					IF p_start <= new_end THEN
-						ret_value = 0;
-				END IF;
-			END IF;
-			RETURN ret_value;
-		END loop;
-		CLOSE my_cursor;
-	END$$
+    RETURNS int
+    BEGIN
+        DECLARE done int default 0;
+        DECLARE snum, manuf, patient varchar(255);
+        DECLARE p_start, p_end date;
+        DECLARE my_cursor cursor for select * from Wears;
+        DECLARE continue handler for not found set done = 1;
+        OPEN my_cursor;
+        my_loop: loop
+            FETCH my_cursor INTO p_start, p_end, patient, snum, manuf;
+            IF done THEN LEAVE my_loop; END IF;
+            IF snum = device_snum THEN
+                IF manuf = device_manuf THEN
+                    IF p_end >= new_start THEN
+                        RETURN 0;
+                    END IF;
+                    IF p_start <= new_end THEN
+                        RETURN 0;
+                    END IF;
+                END IF;
+            END IF;
+        END loop;
+        RETURN 1;
+        CLOSE my_cursor;
+    END$$
 delimiter ;
 
 delimiter $$
 CREATE TRIGGER prevent_overlap_insert BEFORE INSERT 
-	ON Wears
-	FOR EACH ROW 
-	BEGIN
-		IF is_dates_ok(NEW.p_start date, NEW.p_end date, NEW.snum varchar(255), NEW.manuf varchar(255)) = 0 THEN
-			signal sqlstate '45000' set message_text = 'Overlapping periods';
+    ON Wears
+    FOR EACH ROW 
+    BEGIN
+        IF (is_dates_ok(NEW.p_start, NEW.p_end, NEW.snum, NEW.manuf) = 0) THEN
+            signal sqlstate '45000' set message_text = 'Overlapping periods';
+        END IF;
     END$$
 delimiter ;
 
+delimiter $$
 CREATE TRIGGER prevent_overlap_update BEFORE UPDATE
     ON Wears
     FOR EACH ROW 
     BEGIN
-        IF is_dates_ok(NEW.p_start date, NEW.p_end date, OLD.snum varchar(255), OLD.manuf varchar(255)) = 0 THEN
+        IF (is_dates_ok(NEW.p_start, NEW.p_end, OLD.snum, OLD.manuf) = 0) THEN
             signal sqlstate '45000' set message_text = 'Overlapping periods';
+        END IF;
     END$$
 delimiter ;
 
