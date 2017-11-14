@@ -13,7 +13,9 @@ p_number            name                birthday            address
 123                 Turner              1974-07-26          Madison Av.         
 130                 Jones               2005-09-12          Madison Av.         
 147                 Curry               1996-06-16          Areeiro Street      
-159                 Smith               1956-01-05          Fifth Av.        
+159                 Smith               1956-01-05          Fifth Av.           
+
+
 
 <p>Query: SELECT * FROM Doctor;</p>
 p_number            doctor_id           
@@ -22,6 +24,7 @@ p_number            doctor_id
 86                  204                 
 108                 202                 
 123                 205                 
+
 
 
 <p>Query: SELECT * FROM Device;</p>
@@ -44,7 +47,7 @@ snum                manuf               units
 A10U7F              Proteus             mg/dL               
 A23OE5              Proteus             mg/dL               
 A47B8M              Proteus             mg/dL               
-B5TR46              Samsung             ï¿½C                  
+B5TR46              Samsung             ºC                  
 CF2YH9              HP                  mV                  
 
 
@@ -110,31 +113,39 @@ p_start             p_end               patient             snum                
 
 <p>Query: SELECT * FROM Request;</p>
 r_number            patient_id          doctor_id           r_date              
-1                   159                 201                 2017-08-18          
-2                   12                  202                 2017-09-10          
-3                   97                  203                 2017-08-28          
-4                   108                 204                 2017-09-25          
-5                   23                  201                 2017-09-09          
-6                   15                  205                 2017-10-07          
-7                   159                 203                 2017-10-27          
-8                   159                 204                 2017-09-15          
-9                   159                 201                 2017-10-16          
-10                  159                 202                 2017-11-04          
+1                   159                 201                 2016-08-18          
+2                   12                  202                 2016-09-10          
+3                   97                  203                 2016-08-28          
+4                   108                 204                 2016-09-25          
+5                   23                  201                 2016-09-09          
+6                   15                  205                 2016-10-07          
+7                   159                 203                 2016-10-27          
+8                   159                 204                 2016-09-15          
+9                   159                 201                 2016-10-16          
+10                  159                 202                 2016-11-04          
+11                  108                 203                 2017-03-24          
+12                  108                 203                 2017-05-12          
+13                  108                 203                 2017-06-04          
+14                  108                 203                 2017-09-15          
 
 
 
 <p>Query: SELECT * FROM Study;</p>
 request_number      description         s_date              doctor_id           serial_number       manufacturer        
-1                   X-ray left knee     2017-08-23          202                 S57BT2              Medtronic           
-2                   X-ray both hands    2017-09-16          203                 S76BT3              Medtronic           
-3                   ECG                 2017-09-02          204                 S89RE4              Medtronic           
-4                   ECG                 2017-10-01          205                 S35G7U              Medtronic           
-5                   pregnancy echography2017-09-12          202                 S64OI1              Medtronic           
-6                   X-ray right arm     2017-10-07          201                 S57BT2              Medtronic           
-7                   X-ray left knee     2017-10-27          204                 S76BT3              Medtronic           
-8                   ECG                 2017-09-15          205                 S89RE4              Medtronic           
-9                   ECG                 2017-10-16          202                 S35G7U              Medtronic           
-10                  echography left knee2017-11-07          203                 S64OI1              Medtronic           
+1                   X-ray left knee     2016-08-23          202                 S57BT2              Medtronic           
+2                   X-ray both hands    2016-09-16          203                 S76BT3              Medtronic           
+3                   ECG                 2016-09-02          204                 S89RE4              Medtronic           
+4                   ECG                 2016-10-01          205                 S35G7U              Medtronic           
+5                   pregnancy echography2016-09-12          202                 S64OI1              Medtronic           
+6                   X-ray right arm     2016-10-07          201                 S57BT2              Medtronic           
+7                   X-ray left knee     2016-10-27          204                 S76BT3              Medtronic           
+8                   ECG                 2016-09-15          205                 S89RE4              Medtronic           
+9                   ECG                 2016-10-16          202                 S35G7U              Medtronic           
+10                  echography left knee2016-11-07          203                 S64OI1              Medtronic           
+11                  X-ray right hand    2017-04-02          202                 S57BT2              Medtronic           
+12                  X-ray both knees    2017-05-20          204                 S76BT3              Medtronic           
+13                  echography right knee2017-06-12          201                 S64OI1              Medtronic           
+14                  ECG                 2017-09-20          205                 S89RE4              Medtronic           
 
 
 
@@ -150,6 +161,10 @@ series_id           name                base_url            request_number      
 8                   S0808               series08.08         8                   ECG                 
 9                   S0909               series09.09         9                   ECG                 
 10                  S1010               series10.10         10                  echography left knee
+11                  S57BT2              series11.11         11                  X-ray right hand    
+12                  S76BT3              series12.12         12                  X-ray both knees    
+13                  S64OI1              series13.13         13                  echography right knee
+14                  S89RE4              series14.14         14                  ECG                 
 
 
 
@@ -175,6 +190,11 @@ series_id           elem_index
 9                   2                   
 9                   3                   
 10                  1                   
+11                  1                   
+12                  1                   
+12                  2                   
+13                  1                   
+14                  1                   
 
 
 
@@ -186,5 +206,11 @@ series_id           elem_index          x1                  y1                  
 6                   1                   0.30                0.40                0.35                0.50                
 7                   1                   7.70                0.30                0.75                0.35                
 10                  1                   0.20                0.50                0.35                0.60                
+12                  1                   0.30                0.50                0.35                0.55                
+13                  1                   0.50                0.80                0.60                0.85                
 
 
+<p>Connection closed.</p>
+
+
+	
