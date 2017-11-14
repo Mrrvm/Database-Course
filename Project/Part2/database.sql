@@ -169,7 +169,6 @@ INSERT INTO Sensor VALUES('A47B8M', 'Proteus', 'mg/dL');
 INSERT INTO Sensor VALUES('B5TR46', 'Samsung', 'ºC');
 INSERT INTO Sensor VALUES('CF2YH9', 'HP', 'mV');
 
-
 INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-06-15 14:35:06', 235); --Smith
 INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-08-23 14:35:06', 235); --Smith
 INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-08-30 14:34:30', 220); --Smith
@@ -178,6 +177,7 @@ INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-09-14 14:27:53', 180); --S
 INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-09-21 14:30:26', 190); --Green
 INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-09-30 14:32:15', 200); --Green
 INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-10-01 14:33:52', 190); --Green
+INSERT INTO Reading VALUES('A23OE5', 'Proteus', '2017-09-17 14:35:26', 214); --Green
 
 INSERT INTO Reading VALUES('A10U7F', 'Proteus', '2017-09-02 15:24:14', 185); --Hayes
 INSERT INTO Reading VALUES('A10U7F', 'Proteus', '2017-09-15 13:15:36', 190); --Hayes
@@ -238,6 +238,7 @@ INSERT INTO Request VALUES(11, 108, 203, '2017-03-24'); --Jackson
 INSERT INTO Request VALUES(12, 108, 203, '2017-05-12'); --Jackson
 INSERT INTO Request VALUES(13, 108, 203, '2017-06-04'); --Jackson
 INSERT INTO Request VALUES(14, 108, 203, '2017-09-15'); --Jackson
+INSERT INTO Request VALUES(15, 108, 203, '2017-09-20'); --Jackson
 
 
 
@@ -255,6 +256,7 @@ INSERT INTO Study VALUES(11, 'X-ray right hand', '2017-04-02', 202, 'S57BT2', 'M
 INSERT INTO Study VALUES(12, 'X-ray both knees', '2017-05-20', 204, 'S76BT3',  'Medtronic');    --Jackson
 INSERT INTO Study VALUES(13, 'echography right knee', '2017-06-12', 201, 'S64OI1', 'Medtronic');--Jackson
 INSERT INTO Study VALUES(14, 'ECG', '2017-09-20', 205, 'S89RE4', 'Medtronic');                  --Jackson
+INSERT INTO Study VALUES(15, 'ECG', '2017-10-01', 205, 'S35G7U', 'Medtronic');                  --Jackson
 
 
 INSERT INTO Series VALUES(01, 'S0101', 'series01.01', 01, 'X-ray left knee');
