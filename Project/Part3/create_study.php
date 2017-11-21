@@ -74,7 +74,9 @@ echo ('<form action="submit_study.php" method = "post">
                 </p>
                 <p>Description: <input type="text" name="series_description" required/>
                     <span class="error">* </span>
-                </p></form>');
+                </p>
+                <p><input type="submit" value="Submit"/></p>
+                </form>');
 
 $connection = null;
         ?>
