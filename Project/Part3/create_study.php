@@ -52,7 +52,7 @@ echo ('</select>
                 </select>
                 <select name = "year" required>
                     <option value = "0000">---year---</option>');
-for ($y = date('Y'); $y >= 1915; $y--) {
+for ($y = date('Y'); $y <= 2022; $y++) {
     echo ("<option value=\"$y\">$y</option>");
 }
 echo ('</select>');
