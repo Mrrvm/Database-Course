@@ -61,22 +61,21 @@ echo ('<p>Doctor ID: <input type="text" name="doctor_id" required/>
               <p>Manufaturer: <input type="text" name="manufacturer" required/>
                 <span class="error">* </span></p>
               <p>Serial Number: <input type="text" name="serial_number" required/>
-                    <span class="error">* </span></p></form>');
+                    <span class="error">* </span></p>');
 
-echo ('<form action="submit_study.php" method = "post">
-                <h3>Create a new serie:</h3>
-                <span class="error">* required field</span>
-                <p>Series ID: <input type="text" name="series_id" required/>
-                    <span class="error">* </span>
-                </p>
-                <p>Name: <input type="text" name="series_name" required/>
-                    <span class="error">* </span>
-                </p>
-                <p>Description: <input type="text" name="series_description" required/>
-                    <span class="error">* </span>
-                </p>
-                <p><input type="submit" value="Submit"/></p>
-                </form>');
+echo ('<h3>Create a new serie:</h3>
+        <span class="error">* required field</span>
+        <p>Series ID: <input type="text" name="series_id" required/>
+            <span class="error">* </span>
+        </p>
+        <p>Name: <input type="text" name="series_name" required/>
+            <span class="error">* </span>
+        </p>
+        <p>Description: <input type="text" name="series_description" required/>
+            <span class="error">* </span>
+        </p>
+        <p><input type="submit" value="Submit"/></p>
+        </form>');
 
 $connection = null;
         ?>

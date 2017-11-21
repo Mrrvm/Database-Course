@@ -29,7 +29,7 @@
         $result = $connection->query($sql);
         
         if($result != null)
-            echo "study not created. ERROR: already exists.";
+            echo("study created. ERROR: already exists. ");
 
         $connection = null;
  ?>
