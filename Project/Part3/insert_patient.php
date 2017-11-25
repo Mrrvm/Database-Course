@@ -16,15 +16,13 @@
         }
 
         $patient_name = $_REQUEST['patient_name'];
-        $day = $_REQUEST['day'];
-        $month = $_REQUEST['month'];
-        $year = $_REQUEST['year'];
-        $birthdate = $year.'-'.$month.'-'.$day;
+        $birthdate = $_REQUEST['birthdate'];
         $address = $_REQUEST['address'];
 
-        echo "<p>$patient_name, $birthdate, $address</p>";
+        $sql = "SELECT      p_number
+                FROM        Patient
+                ORDER BY    p_number desc";
 
-        $sql = "SELECT p_number FROM Patient ORDER BY p_number desc";
         $result = $connection->query($sql);
         $i = 0;
         foreach ($result as $row) {
@@ -33,15 +31,27 @@
         }
         $j = 1;
         $patient_number = $p_number[0] + $j;
-        echo"<p>$patient_number</p>";
 
-        $sql = "INSERT INTO Patient VALUES('$patient_number', '$patient_name',
-                                            '$birthdate', '$address')";
-        echo("<p>$sql</p>");
-        $nrows = $connection->exec($sql);
-        echo("<p>Rows inserted: $nrows</p>");
+        $stmt = $connection->prepare("INSERT INTO Patient
+                                    VALUES(:p_number, :name, :birthday, :address)");
+        $stmt->bindParam(':p_number', $patient_number);
+        $stmt->bindParam(':name', $patient_name);
+        $stmt->bindParam(':birthday', $birthdate);
+        $stmt->bindParam(':address', $address);
+
+        if($stmt->execute()){
+            echo("</br><h2>New patient inserted in the database</h2>");
+            echo "<ul>Patien name: $patient_name</br></br>
+                Patient number: $patient_number</br></br>
+                Birthday: $birthdate</br></br>
+                Address: $address</br></ul>";
+        }else {
+            echo "</br><h2>ERROR: inserting new patient</h2>";
+        }
 
         $connection = null;
+
+        echo("</br><h3><a href='index.html'>Home page</a></h3>");
  ?>
     </body>
 </html>
