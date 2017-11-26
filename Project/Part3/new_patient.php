@@ -18,6 +18,8 @@ echo('<form action="insert_patient.php" method = "post">
         </p>
         <p><input type="submit" value="Submit"/></p>
     </form>');
+
+    echo("</br><h3><a href='index.html'>Home page</a></h3>");
 ?>
     </body>
 </html>

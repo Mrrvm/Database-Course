@@ -31,10 +31,10 @@
         if ($nrows == 0) {
             echo "<h2>No devices</h2>";
         }else {
-            echo "<h2>Devices:</h2>";
+            echo "<h2>Devices used or in use by the patient:</h2>";
             echo "<ul>";
-            $today = date("Y-m-d");
 
+            $today = date("Y-m-d");
             foreach ($result as $row) {
                 $start = $row['p_start'];
                 $end = $row['p_end'];
@@ -42,7 +42,8 @@
                 $manuf = $row['manuf'];
                 if($today < $end){
                     echo "<li><mark>$snum &nbsp &nbsp $manuf</mark> &nbsp &nbsp ";
-                    echo("<a href='replace_device.php?snum=$snum&manuf=$manuf'>REPLACE</a></li></br>");
+                    echo("<a href='replace_device.php?snum=$snum&manuf=$manuf
+                    &patient=$patient&start=$start'>REPLACE</a></li></br>");
                 }else{
                     echo "<li>$snum &nbsp &nbsp $manuf</li></br>";
                 }
