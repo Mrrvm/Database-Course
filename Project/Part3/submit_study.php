@@ -30,7 +30,7 @@
     $manufacturer = $_POST['manufacturer'];
     $serial_number = $_POST['serial_number'];
     $series_id = $_POST['series_id'];
-    $serie_name = $_POST['series_name'];
+    $series_name = $_POST['series_name'];
     $series_description = $_POST['series_description'];
     $url = "https://web.ist.utl.pt/".$user."/series/".$series_id;
 
@@ -99,7 +99,7 @@
     try {
         $insert_study = "INSERT INTO Study values (:request_number, :description, :s_date, :doctor_id, :serial_number, :manufacturer);";
         $result_study = $connection->prepare($insert_study);
-        $insert_series = "INSERT INTO Series values (:series_id, :name, :base_url, :request_number, :description);";
+        $insert_series = "INSERT INTO Series values (:series_id, :series_name, :base_url, :request_number, :series_description);";
         $result_series = $connection->prepare($insert_series);
 
         $connection->beginTransaction();
@@ -113,10 +113,10 @@
         $result_study->execute();
 
         $result_series->bindParam(':series_id',$series_id);
-        $result_series->bindParam(':name', $name);
+        $result_series->bindParam(':series_name', $series_name);
         $result_series->bindParam(':base_url',$url);
         $result_series->bindParam(':request_number',$request_number);
-        $result_series->bindParam(':description',$description); 
+        $result_series->bindParam(':series_description',$description); 
         $result_series->execute();
 
         $connection->commit();
@@ -127,6 +127,9 @@
         echo("<a href='create_study.php'>Go back</a>");
         exit(0);
     }       
+
+    echo("<p> A new study was created! </p>");
+    echo("<a href='create_study.php'>Go back</a>");
 
     $connection = null;
 ?>
