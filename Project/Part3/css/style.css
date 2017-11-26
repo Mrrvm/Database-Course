@@ -1,11 +1,12 @@
   html {
     font-family: Verdana, Geneva, sans-serif;
+    padding: 30px;
   }
   ul { list-style-type: none; }
-  ul h3 {color:#484848;}
+  ul h3 {color:#686868;}
   a { 
-    color:#484848;
-    text-decoration-color: #484848;
+    color:#686868;
+    text-decoration-color: #686868;
   }
   a:visited { text-decoration: none; }
   a:hover { text-decoration: none; }s

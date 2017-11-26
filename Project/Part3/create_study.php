@@ -1,8 +1,36 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>SIBD Project</title>
+     <title>SIBD Project</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+       $(document).ready(function(){
+           
+           $("#manufacturer").change(function(){
+                 var manufacturer=$("#manufacturer").val();
+                 $.ajax({
+                    type:"post",
+                    url:"dropdown/get_snum.php",
+                    data:"manufacturer="+manufacturer,
+                    success:function(result){
+                          $("#snum").html(result);
+                    }
+                 });
+           });
+           $("#request_number").change(function(){
+                 var request_number=$("#request_number").val();
+                 $.ajax({
+                    type:"post",
+                    url:"dropdown/get_doctor_id.php",
+                    data:"request_number="+request_number,
+                    success:function(result){
+                          $("#doctor_id").html(result);
+                    }
+                 });
+           });
+       });
+    </script>
 </head>
 <body>
 <?php include 'header.php';?>
@@ -24,7 +52,7 @@
         <h3>Create a new study:</h3>
         <span class="error">* required field</span>
         <p>Request Number: 
-            <select name="request_number" required>
+            <select id="request_number" name="request_number" required>
                 <option></option>
 <!-- Get all request numbers-->  
 <?php
@@ -50,27 +78,14 @@
         <span class="error">* </span>
         </p>
         <p>Doctor ID: 
-            <select name="doctor_id" required>
+            <select id="doctor_id" name="doctor_id" required>
                 <option></option>
 <!-- Get all doctors-->                
-<?php
-    $sql = "SELECT distinct doctor_id FROM Doctor ORDER BY doctor_id";
-    $result = $connection->query($sql);
-    if ($result == FALSE) {
-        $info = $connection->errorInfo();
-        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
-        exit(0);
-    }
-    foreach($result as $row) {
-        $doctor_id = $row['doctor_id'];
-        echo("<option value=\"$doctor_id\">$doctor_id</option>");
-    }
-?>
             </select> 
             <span class="error">* </span>
         </p>       
         <p>Manufacturer: 
-            <select name="manufacturer" required>
+            <select id="manufacturer" name="manufacturer" required>
                 <option></option>
 <!-- Get all manufacturers-->                
 <?php
@@ -90,22 +105,9 @@
             <span class="error">* </span>
         </p>       
         <p>Serial Number:
-            <select name="serial_number" required>
+            <select id="snum" name="serial_number" required>
                 <option></option>
 <!-- Get all serial numbers-->  
-<?php
-    $sql = "SELECT distinct serialnum FROM Device ORDER BY serialnum";
-    $result = $connection->query($sql);
-    if ($result == FALSE) {
-        $info = $connection->errorInfo();
-        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
-        exit(0);
-    }
-    foreach($result as $row) {
-        $serial_number = $row['serialnum'];
-        echo("<option value=\"$serial_number\">$serial_number</option>");
-    }
-?>
             </select> 
             <span class="error">* </span>
         </p>     

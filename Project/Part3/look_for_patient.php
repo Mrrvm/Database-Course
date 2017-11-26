@@ -1,8 +1,12 @@
 <html>
-    <body>
-        <style>
-            .error {color: #FF0000;}
-        </style>
+<head>
+    <meta charset="utf-8">
+    <title>SIBD Project</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<?php include 'header.php';?>
+<?php include 'footer.php';?>
 <?php
 
         $host = "db.ist.utl.pt";
@@ -43,20 +47,19 @@
                     </p>
                     <p><input type="submit" value="Submit"/></p>
                 </form>');
-        }else {
-            echo("<h2>Patients:\n\n</h2>");
+        } 
+        else {
+            echo("<h3>Patients with '$patient_name':</h3>");
             echo("<ul>");
             foreach ($result as $row) {
                 $p_name = $row['name'];
                 $p_number = $row['p_number'];
-                echo("<p><li><h3><a href='patient.php?number=$p_number'>$p_name</a></h3></li></p>");
+                echo("<li><h3><a href='patient.php?number=$p_number'>$p_name</a></h3></li>");
             }
             echo("</ul>");
-            echo("<p><h3><a href='new_patient.php'>Insert new patient</a></h3></p>");
+            echo("<h3><a href='new_patient.php'> Not listed? Insert new patient</a></h3>");
         }
         $connection = null;
-
-        echo("</br><h3><a href='index.html'>Home page</a></h3>");
 ?>
     </body>
 </html>
