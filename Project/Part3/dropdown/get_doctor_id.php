@@ -20,10 +20,9 @@
             ORDER BY doctor_id";
     $result = $connection->query($sql);
     if ($result == FALSE) {
-        $info = $connection->errorInfo();
-        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
         exit(0);
     }
+    echo("<option></option>");
     foreach($result as $row) {
         $doctor_id = $row['doctor_id'];
         echo("<option value=\"$doctor_id\">$doctor_id</option>");

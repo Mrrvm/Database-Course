@@ -31,7 +31,6 @@
     $serial_number = $_POST['serial_number'];
     $series_name = $_POST['series_name'];
     $series_description = $_POST['series_description'];
-    $url = "https://web.ist.utl.pt/".$user."/series/".$series_id;
 
     /* If series already exists */
     $sql = "SELECT series_id FROM Series 
@@ -50,22 +49,8 @@
     else {
         $last_series_id = $result->fetchColumn(0);
         $series_id = $last_series_id + 1;
-    } 
-    
-    /* If study date is invalid */
-    $sql = "SELECT r_date FROM Request WHERE r_number=$request_number;";
-    $result = $connection->query($sql);
-    if ($result == FALSE) {
-        $info = $connection->errorInfo();
-        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
-        exit(0);
     }
-    $r_date = $result->fetchColumn(0);
-    if($date < $r_date) {
-        echo("<p> A new study was NOT created! ERROR: date is invalid.</p>");
-        echo("<a href='create_study.php'>Go back</a>");
-        exit(0);
-    }
+    $url = "https://web.ist.utl.pt/".$user."/series/".$series_id; 
 
     /* Try insert in database (to avoid SQL Injetion)*/
     try {

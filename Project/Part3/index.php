@@ -9,7 +9,7 @@
     <ul>
       <li>
         <h3>Search Patient</h3>
-        <form action="look_for_patient.php" method="post">
+        <form action="NOTYETlook_for_patient.php" method="post">
           <p>Patient name: <input value="" type="text" name="patient_name" required/> <input value="Submit" type="submit" value="Submit"/></p>
         </form>
       </li>

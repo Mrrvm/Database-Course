@@ -4,6 +4,8 @@
      <title>SIBD Project</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript">
        $(document).ready(function(){
            
@@ -26,6 +28,14 @@
                     data:"request_number="+request_number,
                     success:function(result){
                           $("#doctor_id").html(result);
+                    }
+                 });
+                 $.ajax({
+                    type:"post",
+                    url:"dropdown/get_date.php",
+                    data:"request_number="+request_number,
+                    success:function(result){
+                          $(result).insertBefore("#date");
                     }
                  });
            });
@@ -74,20 +84,20 @@
         <p>Description: <input type="text" name="description" required/>
         <span class="error">* </span>
         </p>
-        <p>Date: <input type="date" name="date" required/>
+        <p>Date: <input id="date" type="text" name="date" required/>
         <span class="error">* </span>
         </p>
         <p>Doctor ID: 
             <select id="doctor_id" name="doctor_id" required>
                 <option></option>
-<!-- Get all doctors-->                
+<!-- Get all availables doctors given a certain request number-->                
             </select> 
             <span class="error">* </span>
         </p>       
         <p>Manufacturer: 
             <select id="manufacturer" name="manufacturer" required>
                 <option></option>
-<!-- Get all manufacturers-->                
+<!-- Get all manufacturers -->                
 <?php
     $sql = "SELECT distinct manufacturer FROM Device ORDER BY manufacturer";
     $result = $connection->query($sql);
@@ -107,7 +117,7 @@
         <p>Serial Number:
             <select id="snum" name="serial_number" required>
                 <option></option>
-<!-- Get all serial numbers-->  
+<!-- Get all serial numbers of a certain manufacturer -->  
             </select> 
             <span class="error">* </span>
         </p>     

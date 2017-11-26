@@ -18,10 +18,9 @@
             ORDER BY serialnum";
     $result = $connection->query($sql);
     if ($result == FALSE) {
-        $info = $connection->errorInfo();
-        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
         exit(0);
     }
+    echo("<option></option>");
     foreach($result as $row) {
         $serial_number = $row['serialnum'];
         echo("<option value=\"$serial_number\">$serial_number</option>");
