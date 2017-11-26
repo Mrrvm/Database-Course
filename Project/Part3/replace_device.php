@@ -16,34 +16,34 @@
             exit();
         }
 
+        $patient = $_GET['patient'];
+        $start = $_GET['start'];
         $curr_snum = $_GET['snum'];
         $curr_manuf = $_GET['manuf'];
         $today = date("Y-m-d");
 
-        echo "$curr_snum $curr_manuf $today</br>";
-
         $sql = "SELECT  distinct Device.serialnum, Device.manufacturer
                 FROM    Device, Wears
-                WHERE   Device.serialnum = Wears.snum
-                        AND Device.serialnum <> $curr_snum
-                        AND Device.manufacturer = Wears.manuf
-                        AND Device.manufacturer = $curr_manuf
-                        AND Wears.p_end < $today";
+                WHERE   Wears.snum = Device.serialnum
+                        AND Wears.manuf = Device.manufacturer
+                        AND Device.serialnum != '$curr_snum'
+                        AND Device.manufacturer = '$curr_manuf'
+                        AND Wears.p_end > $today";
 
         $result = $connection->query($sql);
         $nrows = $result->rowCount();
 
-        echo "nrows = $nrows</br>";
-
         if ($nrows == 0) {
             echo "<h2>No devices available for replacement</h2>";
         }else {
-            echo("<h2>Devices:\n\n</h2>");
+            echo("<h2>Possible replacement devices:\n\n</h2>");
             echo("<ul>");
             foreach ($result as $row) {
                 $snum = $row['serialnum'];
                 $manuf = $row['manufacturer'];
-                echo "<li>$snum &nbsp &nbsp $manuf &nbsp &nbsp ";
+                echo("<li><a href='update_device.php?new_snum=$snum
+                &manuf=$manuf&patient=$patient&start=$start'>$snum</a>");
+                echo "&nbsp &nbsp $manuf</li></br>";
             }
             echo("</ul>");
         }
