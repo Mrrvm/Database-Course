@@ -29,13 +29,14 @@
     $doctor_id = $_POST['doctor_id'];
     $manufacturer = $_POST['manufacturer'];
     $serial_number = $_POST['serial_number'];
-    $series_id = $_POST['series_id'];
     $series_name = $_POST['series_name'];
     $series_description = $_POST['series_description'];
     $url = "https://web.ist.utl.pt/".$user."/series/".$series_id;
 
     /* If series already exists */
-    $sql = "SELECT series_id FROM Series WHERE series_id=$series_id;";
+    $sql = "SELECT series_id FROM Series 
+            WHERE series_id >= 
+            ALL(SELECT series_id FROM Series);";
     $result = $connection->query($sql);
     if ($result == FALSE) {
         $info = $connection->errorInfo();
@@ -43,11 +44,13 @@
         exit(0);
     }
     $nrows = $result->rowCount();
-    if($nrows > 0) {
-        echo("<p> A new study was NOT created! ERROR: series already exists.</p>");
-        echo("<a href='create_study.php'>Go back</a>");
-        exit(0);
+    if($nrows == 0) {
+        $series_id = 1;
     }
+    else {
+        $last_series_id = $result->fetchColumn(0);
+        $series_id = $last_series_id + 1;
+    } 
     
     /* If study date is invalid */
     $sql = "SELECT r_date FROM Request WHERE r_number=$request_number;";
@@ -65,7 +68,6 @@
     }
 
     /* Try insert in database (to avoid SQL Injetion)*/
-    /* Just in try??*/
     try {
         $sql_study = "INSERT INTO Study values (:request_number, :description, :s_date, :doctor_id, :serial_number, :manufacturer);";
         $result_study = $connection->prepare($sql_study);

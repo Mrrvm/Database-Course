@@ -113,9 +113,6 @@
         </p>     
         <h3>Create a new serie:</h3>
         <span class="error">* required field</span>
-        <p>Series ID: <input type="text" name="series_id" required/>
-        <span class="error">* </span>
-        </p>
         <p>Name: <input type="text" name="series_name" required/>
         <span class="error">* </span>
         </p>
