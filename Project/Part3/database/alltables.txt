@@ -1,0 +1,218 @@
+<p>Connected to MySQL database ist180856 on db.ist.utl.pt as user ist180856</p>
+
+<p>Query: SELECT * FROM Patient;</p>
+p_number            name                birthday            address             
+1                   Adams               1978-03-30          Sunset Av.          
+12                  Green               1943-02-13          Baker Street        
+15                  Johnson             2016-03-24          Second Street       
+23                  Brooks              1997-04-25          Sesame Street       
+55                  Glenn               1995-10-07          Madison Av.         
+86                  Lindsay             1981-05-17          Second Street       
+97                  Hayes               1968-11-21          First Street        
+108                 Jackson             1969-12-02          Fifth Av.           
+123                 Turner              1974-07-26          Madison Av.         
+130                 Jones               2005-09-12          Madison Av.         
+147                 Curry               1996-06-16          Areeiro Street      
+159                 Smith               1956-01-05          Fifth Av.           
+
+
+
+<p>Query: SELECT * FROM Doctor;</p>
+p_number            doctor_id           
+1                   201                 
+12                  203                 
+86                  204                 
+108                 202                 
+123                 205                 
+
+
+
+<p>Query: SELECT * FROM Device;</p>
+serialnum           manufacturer        model               
+A10U7F              Proteus             M3                  
+A23OE5              Proteus             M3                  
+A47B8M              Proteus             M3                  
+B5TR46              Samsung             M6                  
+CF2YH9              HP                  HP7                 
+S35G7U              Medtronic           M5                  
+S57BT2              Medtronic           M4                  
+S64OI1              Medtronic           M2                  
+S76BT3              Medtronic           M4                  
+S89RE4              Medtronic           M5                  
+
+
+
+<p>Query: SELECT * FROM Sensor;</p>
+snum                manuf               units               
+A10U7F              Proteus             mg/dL               
+A23OE5              Proteus             mg/dL               
+A47B8M              Proteus             mg/dL               
+B5TR46              Samsung             ºC                  
+CF2YH9              HP                  mV                  
+
+
+
+<p>Query: SELECT * FROM Reading;</p>
+snum                manuf               date_time           value               
+A10U7F              Proteus             2017-09-02 15:24:14 185.00              
+A10U7F              Proteus             2017-09-15 13:15:36 190.00              
+A10U7F              Proteus             2017-09-21 16:35:54 200.00              
+A10U7F              Proteus             2017-09-30 15:24:14 185.00              
+A10U7F              Proteus             2017-10-02 12:30:25 210.00              
+A10U7F              Proteus             2017-10-14 14:53:05 195.00              
+A23OE5              Proteus             2017-06-15 14:35:06 235.00              
+A23OE5              Proteus             2017-08-23 14:35:06 235.00              
+A23OE5              Proteus             2017-08-30 14:34:30 220.00              
+A23OE5              Proteus             2017-09-07 14:36:00 205.00              
+A23OE5              Proteus             2017-09-14 14:27:53 180.00              
+A23OE5              Proteus             2017-09-21 14:30:26 190.00              
+A23OE5              Proteus             2017-09-30 14:32:15 200.00              
+A23OE5              Proteus             2017-10-01 14:33:52 190.00              
+A47B8M              Proteus             2017-09-13 09:25:34 195.00              
+A47B8M              Proteus             2017-09-20 10:30:45 200.00              
+A47B8M              Proteus             2017-09-27 11:14:51 205.00              
+A47B8M              Proteus             2017-10-05 10:45:02 205.00              
+A47B8M              Proteus             2017-10-15 11:20:10 210.00              
+A47B8M              Proteus             2017-10-20 10:53:40 205.00              
+B5TR46              Samsung             2017-10-07 16:37:24 38.00               
+B5TR46              Samsung             2017-10-08 16:40:00 38.50               
+B5TR46              Samsung             2017-10-09 16:35:16 38.50               
+B5TR46              Samsung             2017-10-10 16:30:10 38.00               
+B5TR46              Samsung             2017-10-11 16:37:45 37.00               
+B5TR46              Samsung             2017-10-12 16:35:02 36.50               
+CF2YH9              HP                  2017-10-28 17:23:05 35.00               
+CF2YH9              HP                  2017-10-30 17:20:23 30.00               
+CF2YH9              HP                  2017-11-01 17:25:42 32.00               
+CF2YH9              HP                  2017-11-03 17:24:36 37.00               
+
+
+
+<p>Query: SELECT * FROM Period;</p>
+p_start             p_end               
+2017-06-10          2017-09-15          
+2017-09-02          2017-09-30          
+2017-09-12          2017-10-21          
+2017-09-16          2017-10-02          
+2017-10-01          2017-10-15          
+2017-10-07          2017-10-12          
+2017-10-27          2017-11-04          
+2017-10-30          2500-01-01          
+
+
+
+<p>Query: SELECT * FROM Wears;</p>
+p_start             p_end               patient             snum                manuf               
+2017-09-02          2017-09-30          97                  A10U7F              Proteus             
+2017-10-01          2017-10-15          108                 A10U7F              Proteus             
+2017-10-30          2500-01-01          159                 A10U7F              Proteus             
+2017-06-10          2017-09-15          159                 A23OE5              Proteus             
+2017-09-16          2017-10-02          12                  A23OE5              Proteus             
+2017-09-12          2017-10-21          55                  A47B8M              Proteus             
+2017-10-07          2017-10-12          15                  B5TR46              Samsung             
+2017-10-27          2017-11-04          147                 CF2YH9              HP                  
+
+
+
+<p>Query: SELECT * FROM Request;</p>
+r_number            patient_id          doctor_id           r_date              
+1                   159                 201                 2016-08-18          
+2                   12                  202                 2016-09-10          
+3                   97                  203                 2016-08-28          
+4                   108                 204                 2016-09-25          
+5                   23                  201                 2016-09-09          
+6                   15                  205                 2016-10-07          
+7                   159                 203                 2016-10-27          
+8                   159                 204                 2016-09-15          
+9                   159                 201                 2016-10-16          
+10                  159                 202                 2016-11-04          
+11                  108                 203                 2017-03-24          
+12                  108                 203                 2017-05-12          
+13                  108                 203                 2017-06-04          
+14                  108                 203                 2017-09-15          
+
+
+
+<p>Query: SELECT * FROM Study;</p>
+request_number      description         s_date              doctor_id           serial_number       manufacturer        
+1                   X-ray left knee     2016-08-23          202                 S57BT2              Medtronic           
+2                   X-ray both hands    2016-09-16          203                 S76BT3              Medtronic           
+3                   ECG                 2016-09-02          204                 S89RE4              Medtronic           
+4                   ECG                 2016-10-01          205                 S35G7U              Medtronic           
+5                   pregnancy echography2016-09-12          202                 S64OI1              Medtronic           
+6                   X-ray right arm     2016-10-07          201                 S57BT2              Medtronic           
+7                   X-ray left knee     2016-10-27          204                 S76BT3              Medtronic           
+8                   ECG                 2016-09-15          205                 S89RE4              Medtronic           
+9                   ECG                 2016-10-16          202                 S35G7U              Medtronic           
+10                  echography left knee2016-11-07          203                 S64OI1              Medtronic           
+11                  X-ray right hand    2017-04-02          202                 S57BT2              Medtronic           
+12                  X-ray both knees    2017-05-20          204                 S76BT3              Medtronic           
+13                  echography right knee2017-06-12          201                 S64OI1              Medtronic           
+14                  ECG                 2017-09-20          205                 S89RE4              Medtronic           
+
+
+
+<p>Query: SELECT * FROM Series;</p>
+series_id           name                base_url            request_number      description         
+1                   S0101               series01.01         1                   X-ray left knee     
+2                   S0202               series02.02         2                   X-ray both hands    
+3                   S0303               series03.03         3                   ECG                 
+4                   S0404               series04.04         4                   ECG                 
+5                   S0505               series05.05         5                   pregnancy echography
+6                   S0606               series06.06         6                   X-ray right arm     
+7                   S0707               series07.07         7                   X-ray left knee     
+8                   S0808               series08.08         8                   ECG                 
+9                   S0909               series09.09         9                   ECG                 
+10                  S1010               series10.10         10                  echography left knee
+11                  S57BT2              series11.11         11                  X-ray right hand    
+12                  S76BT3              series12.12         12                  X-ray both knees    
+13                  S64OI1              series13.13         13                  echography right knee
+14                  S89RE4              series14.14         14                  ECG                 
+
+
+
+<p>Query: SELECT * FROM Element;</p>
+series_id           elem_index          
+1                   1                   
+2                   1                   
+2                   2                   
+3                   1                   
+3                   2                   
+3                   3                   
+3                   4                   
+4                   1                   
+4                   2                   
+4                   3                   
+5                   1                   
+5                   2                   
+6                   1                   
+7                   1                   
+8                   1                   
+8                   2                   
+9                   1                   
+9                   2                   
+9                   3                   
+10                  1                   
+11                  1                   
+12                  1                   
+12                  2                   
+13                  1                   
+14                  1                   
+
+
+
+<p>Query: SELECT * FROM Region;</p>
+series_id           elem_index          x1                  y1                  x2                  y2                  
+1                   1                   0.70                0.30                0.75                0.35                
+5                   1                   0.50                0.40                0.60                0.60                
+5                   2                   0.60                0.30                0.80                0.45                
+6                   1                   0.30                0.40                0.35                0.50                
+7                   1                   7.70                0.30                0.75                0.35                
+10                  1                   0.20                0.50                0.35                0.60                
+12                  1                   0.30                0.50                0.35                0.55                
+13                  1                   0.50                0.80                0.60                0.85                
+
+
+<p>Connection closed.</p>
+
+
+	
