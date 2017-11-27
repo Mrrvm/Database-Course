@@ -20,6 +20,16 @@
      width:100%;
      background:#eeeeee;
   }
+																																									        
+ table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align:center;
+}
+table {
+    border-spacing: 5px;
+}
+																																																																											}
   .footer p { text-align: center; }
   .error {color: #FF0000;}
 
