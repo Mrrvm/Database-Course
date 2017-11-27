@@ -6,20 +6,9 @@ session_start();
 <meta charset="utf-8">
 
   <title>Add New Region</title>
-	
-        <style>
-            .error {color: #FF0000;}
-	table, th, td {
-	    border: 1px solid black;
-	    padding: 5px;
-	    text-align:center;
-	}
-	table {
-	    border-spacing: 5px;
-	}
-        </style>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
-<body>
+ <body>
    <h1>SIBD Project</h1>
    <h2>Elements List</h2>
 <?php
