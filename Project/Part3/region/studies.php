@@ -38,6 +38,6 @@
 	echo("</table>"); 
 
 ?>
-<h3><a href = "index.php">Return</a></h3>
+<h3><a href = "../index.php">Return</a></h3>
     </body>
 </html>
