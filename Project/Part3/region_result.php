@@ -38,10 +38,10 @@ session_start();
 	$s_id = $_SESSION['series_id'];
 	$e_index = $_SESSION['e_ind'];
 	$validation = $_SESSION['validation']; 
-	$x1 = $_SESSION['x1'];
-	$x2 = $_SESSION['x2'];
-	$y1 = $_SESSION['y1'];
-	$y2 = $_SESSION['y2'];
+	$x1 = $_POST['x1'];
+	$x2 = $_POST['x2'];
+	$y1 = $_POST['y1'];
+	$y2 = $_POST['y2'];
 	$sql = "SELECT p.p_number, p.name as p_name, req.r_number, s.name as s_name,st.doctor_id FROM Patient as p, Request as req , Study as st , Series as s WHERE p.p_number = req.patient_id and req.r_number = st.request_number and st.request_number = s.request_number and st.description = s.description and s.series_id = $s_id";
 	$result = $connection->query($sql);
 
