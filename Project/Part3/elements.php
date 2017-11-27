@@ -52,7 +52,7 @@ session_start();
 	echo("<tr><td>$index</td><td>$description</td><td><a href =\"regions.php?ind=$index\" >$count</a></td></tr>");
 	}
 	echo("</table>"); 
- echo("<h3><a href = \"series.php?r_number=$r_number\">Return Series List</a></h3>");
+ 	echo("<h3><a href = \"series.php?r_number=$r_number\">Return Series List</a></h3>");
 ?>
     </body>
 </html>
