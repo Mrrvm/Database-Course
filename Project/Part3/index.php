@@ -19,7 +19,7 @@
         </a>
       </li>
       <li>
-        <a href = ""><h3>Add New Region<h3>
+        <a href = "/region/studies.php"><h3>Add New Region<h3>
         </a>
       </li>
     </ul>
