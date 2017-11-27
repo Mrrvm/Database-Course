@@ -18,6 +18,7 @@ session_start();
 	    border-spacing: 5px;
 	}
         </style>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
    <h1>SIBD Project</h1>

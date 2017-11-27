@@ -6,18 +6,7 @@ session_start();
 <meta charset="utf-8">
 
   <title>Add New Region</title>
-
-        <style>
-            .error {color: #FF0000;}
-	table, th, td {
-	    border: 1px solid black;
-	    padding: 5px;
-	    text-align:center;
-	}
-	table {
-	    border-spacing: 5px;
-	}
-        </style>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
    <h1>SIBD Project</h1>
@@ -42,8 +31,15 @@ session_start();
 	$x2 = $_POST['x2'];
 	$y1 = $_POST['y1'];
 	$y2 = $_POST['y2'];
-	$sql_validation = "SELECT region_overlaps_element($s_id, $e_index, $x1, $y1, $x2, $y2) as verify";
-	$result_validation = $connection->query($sql_validation);
+
+	$result_validation = $connection->prepare("SELECT region_overlaps_element(:s_id, :e_index, :x1, :y1, :x2, :y2) as verify");
+	$result_validation->bindParam(':s_id', $s_id);
+	$result_validation->bindParam(':e_index', $e_index);
+	$result_validation->bindParam(':x1', $x1);
+	$result_validation->bindParam(':y1', $y1);
+	$result_validation->bindParam(':x2', $x2);
+	$result_validation->bindParam(':y2', $y2);
+	$result_validation->execute();
 	foreach($result_validation as $row){
 		$validation = $row['verify'];
 	}
@@ -51,8 +47,14 @@ session_start();
 	$result = $connection->query($sql);
 	
 	if($validation == 0){
-		$sql2 = "INSERT INTO Region values($s_id, $e_index, $x1, $y1, $x2, $y2)";
-		$result_insert = $connection->query($sql2);
+		$result_insert = $connection->prepare("INSERT INTO Region values(:s_id, :e_index, :x1, :y1, :x2, :y2)");
+		$result_insert->bindParam(':s_id', $s_id);
+		$result_insert->bindParam(':e_index', $e_index);
+		$result_insert->bindParam(':x1', $x1);
+		$result_insert->bindParam(':y1', $y1);
+		$result_insert->bindParam(':x2', $x2);
+		$result_insert->bindParam(':y2', $y2);
+		$result_insert->execute();
 		$msg = "SUCCESS - There IS ";
 
 	}else{
