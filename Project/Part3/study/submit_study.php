@@ -2,11 +2,10 @@
     <head>
         <meta charset="utf-8">
         <title>SIBD Project</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
     </head>
     <body>
-<?php include 'header.php';?>
-<?php include 'footer.php';?>
+<?php include '../header.php';?>
 <?php
 
     $host = "db.ist.utl.pt";
@@ -100,5 +99,6 @@
 
     $connection = null;
 ?>
+    <?php include '../footer.php';?>
     </body>
 </html>

@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
      <title>SIBD Project</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -13,7 +13,7 @@
                  var manufacturer=$("#manufacturer").val();
                  $.ajax({
                     type:"post",
-                    url:"dropdown/get_snum.php",
+                    url:"dropdowns/get_snum.php",
                     data:"manufacturer="+manufacturer,
                     success:function(result){
                           $("#snum").html(result);
@@ -24,7 +24,7 @@
                  var request_number=$("#request_number").val();
                  $.ajax({
                     type:"post",
-                    url:"dropdown/get_doctor_id.php",
+                    url:"dropdowns/get_doctor_id.php",
                     data:"request_number="+request_number,
                     success:function(result){
                           $("#doctor_id").html(result);
@@ -32,7 +32,7 @@
                  });
                  $.ajax({
                     type:"post",
-                    url:"dropdown/get_date.php",
+                    url:"dropdowns/get_date.php",
                     data:"request_number="+request_number,
                     success:function(result){
                           $(result).insertBefore("#date");
@@ -43,7 +43,7 @@
     </script>
 </head>
 <body>
-<?php include 'header.php';?>
+<?php include '../header.php';?>
 <?php 
     $host = "db.ist.utl.pt";
     $user = "ist180856";
@@ -131,6 +131,6 @@
         </p>
         <p><input type="submit" value="Submit"/></p>
     </form>
-<?php include 'footer.php';?>
+<?php include '../footer.php';?>
 </body>
 </html>

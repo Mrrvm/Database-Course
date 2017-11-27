@@ -1,10 +1,17 @@
 <html>
+    <head>
+        <meta charset="utf-8">
+        <title>SIBD Project</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+    </head>
     <body>
+<?php include '../header.php';?>
 <?php
 
         $host = "db.ist.utl.pt";
-        $user = "ist178755";
-        $pass = "jagx2469";
+        $user = "ist180856";
+        $pass = "tkeh0706";
         $dsn = "mysql:host=$host; dbname=$user";
 
         try {
@@ -23,9 +30,10 @@
 
         $today = date("Y-m-d");
 
-        $sql = "UPDATE  Period
-                SET     p_end = '$today'
-                WHERE   p_start = '$start' AND p_end = '2500-01-01'";
+        $sql = "UPDATE Period
+                SET p_end = '$today'
+                WHERE p_start = '$start' 
+                    AND p_end = '2500-01-01'";
 
         $nrows = $connection->exec($sql);
 
@@ -37,11 +45,11 @@
 
         $nrows_wears = $connection->exec($sql);
 
-        echo "<h2> Device successfully updated!</h2>";
+        echo "<h3> Device successfully updated!</h3>";
 
         $connection = null;
 
-        echo("</br><h3><a href='index.html'>Home page</a></h3>");
 ?>
    </body>
+<?php include '../footer.php';?>
 </html>

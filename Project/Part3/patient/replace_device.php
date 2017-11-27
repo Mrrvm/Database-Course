@@ -1,10 +1,17 @@
 <html>
+    <head>
+        <meta charset="utf-8">
+        <title>SIBD Project</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+    </head>
     <body>
+<?php include '../header.php';?>
 <?php
 
         $host = "db.ist.utl.pt";
-        $user = "ist178755";
-        $pass = "jagx2469";
+        $user = "ist180856";
+        $pass = "tkeh0706";
         $dsn = "mysql:host=$host; dbname=$user";
 
         try {
@@ -22,21 +29,26 @@
         $curr_manuf = $_GET['manuf'];
         $today = date("Y-m-d");
 
-        $sql = "SELECT  distinct Device.serialnum, Device.manufacturer
-                FROM    Device, Wears
-                WHERE   Wears.snum = Device.serialnum
-                        AND Wears.manuf = Device.manufacturer
-                        AND Device.serialnum != '$curr_snum'
-                        AND Device.manufacturer = '$curr_manuf'
-                        AND Wears.p_end > $today";
+        $sql = "SELECT distinct Device.serialnum, Device.manufacturer
+                FROM Device, Wears
+                WHERE Wears.snum = Device.serialnum
+                    AND Wears.manuf = Device.manufacturer
+                    AND Device.serialnum != '$curr_snum'
+                    AND Device.manufacturer = '$curr_manuf'
+                    AND Wears.p_end > $today";
 
         $result = $connection->query($sql);
+        if ($result == FALSE) {
+            $info = $connection->errorInfo();
+            echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
+            exit(0);
+        }
         $nrows = $result->rowCount();
 
         if ($nrows == 0) {
-            echo "<h2>No devices available for replacement</h2>";
+            echo "<h3>No devices available for replacement</h3>";
         }else {
-            echo("<h2>Possible replacement devices:\n\n</h2>");
+            echo("<h3>Possible replacement devices:</h3>");
             echo("<ul>");
             foreach ($result as $row) {
                 $snum = $row['serialnum'];
@@ -48,9 +60,8 @@
             echo("</ul>");
         }
 
-        $connection = null;
-
-        echo("</br><h3><a href='index.html'>Home page</a></h3>");
+        $connection = null;       
 ?>
    </body>
+<?php include '../footer.php';?>
 </html>
