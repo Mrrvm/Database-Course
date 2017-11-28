@@ -4,22 +4,11 @@ session_start();
 <html>
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 
   <title>Add New Region</title>
-	
-        <style>
-            .error {color: #FF0000;}
-	table, th, td {
-	    border: 1px solid black;
-	    padding: 5px;
-	    text-align:center;
-	}
-	table {
-	    border-spacing: 5px;
-	}
-        </style>
 </head>
-<body>
+ <body>
    <h1>SIBD Project</h1>
    <h2>Elements List</h2>
 <?php
@@ -52,7 +41,7 @@ session_start();
 	echo("<tr><td>$index</td><td>$description</td><td><a href =\"regions.php?ind=$index\" >$count</a></td></tr>");
 	}
 	echo("</table>"); 
- echo("<h3><a href = \"series.php?r_number=$r_number\">Return Series List</a></h3>");
+ 	echo("<h3><a href = \"series.php?r_number=$r_number\">Return Series List</a></h3>");
 ?>
     </body>
 </html>

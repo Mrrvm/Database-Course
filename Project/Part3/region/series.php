@@ -6,18 +6,7 @@ session_start();
 <meta charset="utf-8">
 
   <title>Add New Region</title>
-
-        <style>
-            .error {color: #FF0000;}
-	table, th, td {
-	    border: 1px solid black;
-	    padding: 5px;
-	    text-align:center;
-	}
-	table {
-	    border-spacing: 5px;
-	}
-        </style>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
    <h1>SIBD Project</h1>
@@ -54,6 +43,6 @@ session_start();
 	
 
 ?>
-<h3><a href = "sibd-part3-4.php">Return Studies List</a></h3>
+<h3><a href = "studies.php">Return Studies List</a></h3>
     </body>
 </html>

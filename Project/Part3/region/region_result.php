@@ -6,18 +6,7 @@ session_start();
 <meta charset="utf-8">
 
   <title>Add New Region</title>
-
-        <style>
-            .error {color: #FF0000;}
-	table, th, td {
-	    border: 1px solid black;
-	    padding: 5px;
-	    text-align:center;
-	}
-	table {
-	    border-spacing: 5px;
-	}
-        </style>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
    <h1>SIBD Project</h1>
@@ -37,21 +26,39 @@ session_start();
         }
 	$s_id = $_SESSION['series_id'];
 	$e_index = $_SESSION['e_ind'];
-	$validation = $_SESSION['validation']; 
-	$x1 = $_SESSION['x1'];
-	$x2 = $_SESSION['x2'];
-	$y1 = $_SESSION['y1'];
-	$y2 = $_SESSION['y2'];
+	
+	$x1 = $_POST['x1'];
+	$x2 = $_POST['x2'];
+	$y1 = $_POST['y1'];
+	$y2 = $_POST['y2'];
+
+	$result_validation = $connection->prepare("SELECT region_overlaps_element(:s_id, :e_index, :x1, :y1, :x2, :y2) as verify");
+	$result_validation->bindParam(':s_id', $s_id);
+	$result_validation->bindParam(':e_index', $e_index);
+	$result_validation->bindParam(':x1', $x1);
+	$result_validation->bindParam(':y1', $y1);
+	$result_validation->bindParam(':x2', $x2);
+	$result_validation->bindParam(':y2', $y2);
+	$result_validation->execute();
+	foreach($result_validation as $row){
+		$validation = $row['verify'];
+	}
 	$sql = "SELECT p.p_number, p.name as p_name, req.r_number, s.name as s_name,st.doctor_id FROM Patient as p, Request as req , Study as st , Series as s WHERE p.p_number = req.patient_id and req.r_number = st.request_number and st.request_number = s.request_number and st.description = s.description and s.series_id = $s_id";
 	$result = $connection->query($sql);
-
-	if($validation == "0"){
-		$msg = "ERROR REGION OVERLAP- Could not assign ";	
-	}else{
-		$sql2 = "INSERT INTO Region values($s_id, $e_index, $x1, $y1, $x2, $y2)";
-		$result_insert = $connection->query($sql2);
+	
+	if($validation == 0){
+		$result_insert = $connection->prepare("INSERT INTO Region values(:s_id, :e_index, :x1, :y1, :x2, :y2)");
+		$result_insert->bindParam(':s_id', $s_id);
+		$result_insert->bindParam(':e_index', $e_index);
+		$result_insert->bindParam(':x1', $x1);
+		$result_insert->bindParam(':y1', $y1);
+		$result_insert->bindParam(':x2', $x2);
+		$result_insert->bindParam(':y2', $y2);
+		$result_insert->execute();
 		$msg = "SUCCESS - There IS ";
-		
+
+	}else{
+		$msg = "ERROR REGION OVERLAP- Could not assign ";	
 		
 	}	
 	foreach($result as $row){

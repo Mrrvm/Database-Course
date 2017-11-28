@@ -18,6 +18,7 @@ session_start();
 	    border-spacing: 5px;
 	}
         </style>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
    <h1>SIBD Project</h1>
@@ -74,33 +75,13 @@ session_start();
 	
 ?>
     <h4>Add New Region</h4>
-    <form method="session">
+    <form method="post" action="region_result.php">
     <p>Series ID: <?php echo($s_id)?>  Element Index: <?php echo($e_index);?></p>
     <p>x1: <input value="" type="text" name="x1" required/> y1: <input value="" type="text" name="y1" required/></p>
     <p>x2: <input value="" type="text" name="x2" required/> y2: <input value="" type="text" name="y2" required/></p>
-    <p><input type="submit" name= "validateClick" id="validateClick" value="Submit"/></p>
+    <p><input type="submit" value="Submit"/></p>
     </form>
 <?php echo("<h3><a href = \"elements.php?series_id=$s_id\">Return Elements List</a></h3>");
-function validate($s_id, $e_index, $connection)
-{
-   $x1 = $_SESSION['x1'];
-   $y1 = $_SESSION['y1'];
-   $x2 = $_SESSION['x2'];
-   $y2 = $_SESSION['y2'];
-   $sql_verification = "SELECT region_overlaps_element($s_id, $e_index,$x1, $y1, $x2, $y2) as verify";
-   $answer = $connection->query($sql_verification);
-   foreach($answer as $row){
-	$validation = $row['verify'];
-   }
-   $_SESSION['validation'] = $validation;
-   header('location: region_result.php');
-    
-
-}
-
-if(array_key_exists('validateClick',$_POST)){
-   validate($s_id, $e_index, $connection);
-}
 ?>
     </body>
 </html>

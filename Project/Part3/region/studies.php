@@ -3,18 +3,7 @@
 <meta charset="utf-8">
 
   <title>Add New Region</title>
-	
-        <style>
-            .error {color: #FF0000;}
-	table, th, td {
-	    border: 1px solid black;
-	    padding: 5px;
-	    text-align:center;
-	}
-	table {
-	    border-spacing: 5px;
-	}
-        </style>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
    <h1>SIBD Project</h1>
@@ -48,7 +37,8 @@
 	}
 	echo("</table>"); 
 
+
+echo("<h3><a href = \"../index.php\">Return</a></h3>");
 ?>
-<h3><a href = "index.html">Return</a></h3>
     </body>
 </html>
