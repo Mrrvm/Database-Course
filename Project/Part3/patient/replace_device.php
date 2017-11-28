@@ -25,6 +25,7 @@
 
         $patient = $_GET['patient'];
         $start = $_GET['start'];
+        $end = $_GET['end'];
         $curr_snum = $_GET['snum'];
         $curr_manuf = $_GET['manuf'];
         $today = date("Y-m-d");
@@ -35,7 +36,14 @@
                     AND Wears.manuf = Device.manufacturer
                     AND Device.serialnum != '$curr_snum'
                     AND Device.manufacturer = '$curr_manuf'
-                    AND Wears.p_end > $today";
+                    AND Device.serialnum NOT IN
+                        (SELECT distinct Device.serialnum
+                        FROM Device, Wears
+                        WHERE Wears.snum = Device.serialnum
+                            AND Wears.manuf = Device.manufacturer
+                            AND Device.serialnum != '$curr_snum'
+                            AND Device.manufacturer = '$curr_manuf'
+                            AND Wears.p_end > '$today')";
 
         $result = $connection->query($sql);
         if ($result == FALSE) {
@@ -54,7 +62,7 @@
                 $snum = $row['serialnum'];
                 $manuf = $row['manufacturer'];
                 echo("<li><a href='update_device.php?new_snum=$snum
-                &manuf=$manuf&patient=$patient&start=$start'>$snum</a>");
+                &manuf=$manuf&patient=$patient&start=$start&end=$end'>$snum</a>");
                 echo "&nbsp &nbsp $manuf</li></br>";
             }
             echo("</ul>");

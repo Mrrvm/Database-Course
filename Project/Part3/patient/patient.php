@@ -55,7 +55,7 @@
             if($today < $end){
                 echo "<li><mark>$snum &nbsp &nbsp $manuf</mark> &nbsp &nbsp ";
                 echo("<a href='replace_device.php?snum=$snum&manuf=$manuf
-                &patient=$patient&start=$start'><button>REPLACE</button></a></li></br>");
+                &patient=$patient&start=$start&end=$end'><button>REPLACE</button></a></li></br>");
             }
             else{
                 echo "<li>$snum &nbsp &nbsp $manuf</li></br>";

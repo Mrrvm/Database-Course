@@ -214,6 +214,8 @@ insert into Period values('2017-09-12', '2017-10-21');
 insert into Period values('2017-10-07', '2017-10-12');
 insert into Period values('2017-10-27', '2017-11-04');
 insert into Period values('2017-10-30', '2500-01-01');
+insert into Period values('2017-11-04', '2017-12-24');
+insert into Period values('2017-11-16', '2018-01-06');
 
 
 
@@ -225,6 +227,9 @@ insert into Wears values('2017-09-12', '2017-10-21', 055, 'A47B8M', 'Proteus'); 
 insert into Wears values('2017-10-07', '2017-10-12', 015, 'B5TR46', 'Samsung'); --Johnson
 insert into Wears values('2017-10-27', '2017-11-04', 147, 'CF2YH9', 'HP');      --Curry
 insert into Wears values('2017-10-30', '2500-01-01', 159, 'A10U7F', 'Proteus'); --Smith
+insert into Wears values('2017-10-30', '2500-01-01', 147, 'CF2YH9', 'HP');      --Curry
+insert into Wears values('2017-11-04', '2017-12-24', 012, 'B5TR46', 'Samsung'); --Green
+insert into Wears values('2017-11-16', '2018-01-06', 097, 'A47B8M', 'Proteus'); --Hayes
 
 
 
