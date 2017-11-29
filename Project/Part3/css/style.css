@@ -118,3 +118,7 @@ a:hover, a:active { text-decoration: none;}
   background-color: #fff;
   cursor: default;
 }
+
+#newstyle{
+	margin-left: 3em;
+}

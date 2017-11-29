@@ -15,13 +15,9 @@
 <?php
 	$r_number = $_GET['r_number'];
 	$description = $_GET['description'];
-	echo "$description";
 	$_SESSION['r_number'] = $r_number;
-	$sql = "SELECT *, count(e.series_id) 
-			FROM Series AS s 
-			NATURAL JOIN Element AS e 
-			WHERE s.request_number = $r_number
-			AND s.description = $description";
+	$_SESSION['description'] = $description;
+	$sql = "select s.series_id, s.name, s.description, count(e.elem_index) from Study as st NATURAL JOIN Series as s LEFT OUTER JOIN Element as e on exists(select e2.elem_index from Series natural join Element as e2 where Series.description = st.description and e2.series_id = e.series_id and e.elem_index = e2.elem_index) where st.request_number = $r_number and st.description=$description";
 	$result = $connection->query($sql);
 	if ($result== FALSE) {
         $info = $connection->errorInfo();
@@ -41,7 +37,7 @@
 	    $series_id = $row['series_id'];
 	    $name = $row['name'];
 	    $description = $row['description'];
-	    $count = $row['count(e.series_id)'];
+	    $count = $row['count(e.elem_index)'];
 		echo("
 			<tr>
 				<td>$series_id</td>
