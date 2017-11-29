@@ -14,6 +14,7 @@
     	<h3>Elements List</h3>
 <?php
 	$r_number = $_SESSION['r_number'];
+	$description = $_SESSION['description'];
 	$s_id = $_GET['series_id'];
     $_SESSION['series_id'] = $s_id;
 	$sql = "SELECT e.elem_index,s.description, count(r.x1) as n_regions
@@ -59,7 +60,7 @@
 			</tr>");
 	}
 	echo("</table>"); 
- 	echo("<br><a href = \"series.php?r_number=$r_number\">Return Series List</a>");
+ 	echo("<br><a href = \"series.php?r_number=$r_number&description=$description\">Return Series List</a>");
 ?>
 <?php include '../footer.php';?>
     </body>
