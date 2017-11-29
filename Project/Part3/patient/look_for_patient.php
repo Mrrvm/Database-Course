@@ -42,6 +42,10 @@
         </form>
     </div>
     <script>
+        $('#birthdate').keydown(function(e) {
+           e.preventDefault();
+           return false;
+        });
         $('#insert_patient').hide();
         function show_insert_patient() {
            $('#insert_patient').show();

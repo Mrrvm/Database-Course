@@ -31,6 +31,12 @@
                         }
                      });
                });
+
+                $('#date').keydown(function(e) {
+                   e.preventDefault();
+                   return false;
+                });
+
            });
         </script>
     </head>
