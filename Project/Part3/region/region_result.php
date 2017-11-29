@@ -63,12 +63,13 @@
 		$result_insert->bindParam(':x2', $x2);
 		$result_insert->bindParam(':y2', $y2);
 		$result_insert->execute();
-		$msg = "SUCCESS - There IS ";
+		$msg = "There is ";
+		$style_color = "MediumSeaGreen;";
 
 	}
 	else{
-		$msg = "ERROR REGION OVERLAP- Could not assign ";	
-		
+		$msg = "ERROR REGION OVERLAP - Could not add the ";	
+		$style_color = "Tomato;";
 	}	
 	foreach($result as $row){
 		$p_number = $row['p_number'];	
@@ -79,12 +80,11 @@
 	}
 
 	echo("
-		<p>".$msg . "new clinical evidence on Patient $p_name 
-			(No. $p_number) in Element $e_index from Series $s_name 
-			(ID $s_id) requested by Doctor $doctor_id 
-			(Req. No. $r_number).
+		<p style=\"color:$style_color\">".$msg . "new clinical evidence on: </p><p id=\"newstyle\">Patient Name: $p_name 
+			<br>Patient Number: $p_number <br>Element index: $e_index <br>Series Name: $s_name 
+			(ID $s_id)<br>Study Request Number: $r_number <br> requested by: Doctor $doctor_id 
 		</p>");
-	
+	echo("<br><a href = \"regions.php?ind=$e_index\">Go Back</a>");
 ?>
 <?php include '../footer.php';?>
     </body>
