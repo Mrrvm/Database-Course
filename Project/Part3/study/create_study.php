@@ -30,14 +30,6 @@
                               $("#doctor_id").html(result);
                         }
                      });
-                     $.ajax({
-                        type:"post",
-                        url:"dropdowns/get_date.php",
-                        data:"request_number="+request_number,
-                        success:function(result){
-                              $(result).insertBefore("#date");
-                        }
-                     });
                });
            });
         </script>
@@ -71,6 +63,21 @@
             <p>Description: <input type="text" name="description" required/>
                 <span class="error">* </span>
             </p>
+            <?php
+                $year = date("Y");
+                $month = date("m");
+                $day = date("d");
+                echo("
+                    <script>
+                        $( function() {
+                            $('#date').datepicker({
+                                minDate: new Date($year, $month - 1, $day),
+                                dateFormat: 'yy-mm-dd'
+                            });
+                        } );
+                    </script>
+                ");
+            ?>
             <p>Date: <input id="date" type="text" name="date" required/>
                 <span class="error">* </span>
             </p>
