@@ -69,10 +69,10 @@
                 <span class="error">* </span>
             </p>  
             <p>Description: <input type="text" name="description" required/>
-            <span class="error">* </span>
+                <span class="error">* </span>
             </p>
             <p>Date: <input id="date" type="text" name="date" required/>
-            <span class="error">* </span>
+                <span class="error">* </span>
             </p>
             <p>Doctor ID: 
                 <select id="doctor_id" name="doctor_id" required>

@@ -38,7 +38,7 @@
 	    $manufacturer = $row['manufacturer']; 
 		echo("
 			<tr>
-				<td><a href= \"series.php?r_number=$r_number\"> $r_number</a></td>
+				<td><a href= \"series.php?r_number=$r_number&description='$description'\"> $r_number</a></td>
 				<td>$description</td>
 				<td>$s_date</td>
 				<td>$doctor_id</td>

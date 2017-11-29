@@ -2,8 +2,10 @@
     <head>
         <meta charset="utf-8">
         <title>SIBD Project</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body>
 <?php include '../header.php';?>
@@ -15,7 +17,22 @@
             <p>Patient name: <input type="text" name="patient_name" required/>
                 <span class="error">* </span>
             </p>
-            <p>Birth date: <input type = "date" name="birthdate" required/>
+            <?php
+                $year = date("Y");
+                $month = date("m");
+                $day = date("d");
+                echo("
+                    <script>
+                        $( function() {
+                            $('#birthdate').datepicker({
+                                maxDate: new Date($year, $month - 1, $day),
+                                dateFormat: 'yy-mm-dd'
+                            });
+                        } );
+                    </script>
+                ");
+            ?>
+            <p>Birth date: <input id="birthdate" type = "text" name="birthdate" required/>
                 <span class="error">* </span>
             </p>
             <p>Address: <input type="text" name="address" required/>
@@ -51,9 +68,9 @@
         foreach ($result as $row) {
             $p_name = $row['name'];
             $p_number = $row['p_number'];
-            echo("<li><h3><a href='patient.php?number=$p_number'>$p_name</a></h3></li>");
+            echo("<li><h3><a href='patient.php?number=$p_number'>$p_name - no. $p_number</a></h3></li>");
         }
-        echo("</ul>");
+        echo("</ul>"); 
         echo("<button type='button' onclick='show_insert_patient()'>Not listed? Insert new patient</button>");
         echo("</div>");
     }
