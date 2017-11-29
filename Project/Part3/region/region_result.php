@@ -1,29 +1,18 @@
 <?php
-session_start();
+	session_start();
 ?>
 <html>
-<head>
-<meta charset="utf-8">
-
-  <title>Add New Region</title>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
-   <h1>SIBD Project</h1>
-   
+    <head>
+        <meta charset="utf-8">
+        <title>SIBD Project</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+    	<link rel="stylesheet" type="text/css" href="../css/table_style.css">
+    </head>
+    <body>
+<?php include '../header.php';?>
+<?php include '../database/db.php';?>
 <?php
-	$host = "db.ist.utl.pt";
-        $user = "ist190989";
-        $pass = "wkfi3575";
-        $dsn = "mysql:host=$host; dbname=$user";
-	try {
-            $connection = new PDO($dsn, $user, $pass);
-        } catch (PDOException $exception) {
-            echo("<p>Error: ");
-            echo($exception->getMessage());
-            echo("</p>");
-            exit();
-        }
+	
 	$s_id = $_SESSION['series_id'];
 	$e_index = $_SESSION['e_ind'];
 	
@@ -32,7 +21,8 @@ session_start();
 	$y1 = $_POST['y1'];
 	$y2 = $_POST['y2'];
 
-	$result_validation = $connection->prepare("SELECT region_overlaps_element(:s_id, :e_index, :x1, :y1, :x2, :y2) as verify");
+	$result_validation = $connection->prepare(
+		"SELECT region_overlaps_element(:s_id, :e_index, :x1, :y1, :x2, :y2) as verify");
 	$result_validation->bindParam(':s_id', $s_id);
 	$result_validation->bindParam(':e_index', $e_index);
 	$result_validation->bindParam(':x1', $x1);
@@ -40,14 +30,32 @@ session_start();
 	$result_validation->bindParam(':x2', $x2);
 	$result_validation->bindParam(':y2', $y2);
 	$result_validation->execute();
+	if ($result_validation == FALSE) {
+        $info = $connection->errorInfo();
+        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
+        exit(0);
+    }  
 	foreach($result_validation as $row){
 		$validation = $row['verify'];
 	}
-	$sql = "SELECT p.p_number, p.name as p_name, req.r_number, s.name as s_name,st.doctor_id FROM Patient as p, Request as req , Study as st , Series as s WHERE p.p_number = req.patient_id and req.r_number = st.request_number and st.request_number = s.request_number and st.description = s.description and s.series_id = $s_id";
+
+	$sql = "SELECT p.p_number, p.name as p_name, req.r_number, s.name as s_name,st.doctor_id 
+			FROM Patient as p, Request as req , Study as st , Series as s 
+			WHERE p.p_number = req.patient_id 
+			AND req.r_number = st.request_number 
+			AND st.request_number = s.request_number 
+			AND st.description = s.description 
+			AND s.series_id = $s_id";
 	$result = $connection->query($sql);
-	
+	if ($result== FALSE) {
+        $info = $connection->errorInfo();
+        echo("<p>ERROR: {$info[0]} {$info[1]} {$info[2]}</p>");
+        exit(0);
+    }  
+
 	if($validation == 0){
-		$result_insert = $connection->prepare("INSERT INTO Region values(:s_id, :e_index, :x1, :y1, :x2, :y2)");
+		$result_insert = $connection->prepare(
+			"INSERT INTO Region values(:s_id, :e_index, :x1, :y1, :x2, :y2)");
 		$result_insert->bindParam(':s_id', $s_id);
 		$result_insert->bindParam(':e_index', $e_index);
 		$result_insert->bindParam(':x1', $x1);
@@ -57,7 +65,8 @@ session_start();
 		$result_insert->execute();
 		$msg = "SUCCESS - There IS ";
 
-	}else{
+	}
+	else{
 		$msg = "ERROR REGION OVERLAP- Could not assign ";	
 		
 	}	
@@ -69,8 +78,14 @@ session_start();
 		$doctor_id = $row['doctor_id'];
 	}
 
-	echo("<p>".$msg . "new clinical evidence on Patient $p_name (No. $p_number) in Element $e_index from Series $s_name (ID $s_id) requested by Doctor $doctor_id (Req. No. $r_number).</p>");
+	echo("
+		<p>".$msg . "new clinical evidence on Patient $p_name 
+			(No. $p_number) in Element $e_index from Series $s_name 
+			(ID $s_id) requested by Doctor $doctor_id 
+			(Req. No. $r_number).
+		</p>");
 	
 ?>
+<?php include '../footer.php';?>
     </body>
 </html>

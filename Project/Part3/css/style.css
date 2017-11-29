@@ -1,37 +1,29 @@
-  html {
-    font-family: Verdana, Geneva, sans-serif;
-    padding: 30px;
-  }
-  ul { list-style-type: none; }
-  ul h3 {color:#686868;}
-  a { 
-    color:#686868;
-    text-decoration-color: #686868;
-  }
-  a:visited { text-decoration: none; }
-  a:hover { text-decoration: none; }s
-  a:focus { text-decoration: none; }
-  a:hover, a:active { text-decoration: none;}
-  .footer {
-     position: fixed;
-     left:0px;
-     bottom:0px;
-     height:120px;
-     width:100%;
-     background:#eeeeee;
-  }
-																																									        
- table, th, td {
-    border: 1px solid black;
-    padding: 5px;
-    text-align:center;
+html {
+  font-family: Verdana, Geneva, sans-serif;
+  padding: 30px;
 }
-table {
-    border-spacing: 5px;
+ul { list-style-type: none; }
+ul h3 {color:#686868;}
+a { 
+  color:#686868;
+  text-decoration-color: #686868;
 }
-																																																																											}
-  .footer p { text-align: center; }
-  .error {color: #FF0000;}
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }s
+a:focus { text-decoration: none; }
+a:hover, a:active { text-decoration: none;}
+.footer {
+   position: fixed;
+   left:0px;
+   bottom:0px;
+   height:120px;
+   width:100%;
+   background:#eeeeee;
+   text-align:center;
+}
+.footer p { text-align: center; }
+                                                                                                                                                                                                                                          }
+.error {color: #FF0000;}
 
 /* DatePicker Container */
 .ui-datepicker {

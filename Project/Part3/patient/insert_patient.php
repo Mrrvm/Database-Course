@@ -7,21 +7,8 @@
     </head>
     <body>
 <?php include '../header.php';?>
+<?php include '../database/db.php';?>
 <?php
-    $host = "db.ist.utl.pt";
-    $user = "ist180856";
-    $pass = "tkeh0706";
-    $dsn = "mysql:host=$host; dbname=$user";
-
-    try {
-        $connection = new PDO($dsn, $user, $pass);
-    } catch (PDOException $exception) {
-        echo("<p>Error: ");
-        echo($exception->getMessage());
-        echo("</p>");
-        exit(0);
-    }
-
     $patient_name = $_POST['patient_name'];
     $birthdate = $_POST['birthdate'];
     $address = $_POST['address'];

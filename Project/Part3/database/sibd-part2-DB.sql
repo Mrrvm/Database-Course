@@ -311,6 +311,7 @@ insert into Element values(14, 01);
 
 insert into Region values(01, 01, 0.7, 0.3, 0.75, 0.35);
 insert into Region values(05, 01, 0.5, 0.4, 0.6, 0.6);
+insert into Region values(05, 01, 0.1, 0.4, 0.2, 0.6);
 insert into Region values(05, 02, 0.6, 0.3, 0.8, 0.45);
 insert into Region values(06, 01, 0.3, 0.4, 0.35, 0.5);
 insert into Region values(07, 01, 07.7, 0.3, 0.75, 0.35);
