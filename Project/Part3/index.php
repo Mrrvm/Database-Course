@@ -5,7 +5,12 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<?php include 'header.php';?> 
+<div id='wrapper'>
+    <div id='header'>
+      <h1>SIBD Project</h1>
+      <h2><a style='color:#484848;' href=''><span style='color:#484848'>SIBD's Medical Center</span></a></h2>
+    </div>
+    <div id='content'>
         <ul>
           <li>
             <h3>Search Patient</h3>
