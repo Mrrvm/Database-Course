@@ -53,7 +53,7 @@
         exit(0);
     }  
 
-	if($validation == 0){
+	if($validation == '0'){
 		$result_insert = $connection->prepare(
 			"INSERT INTO Region values(:s_id, :e_index, :x1, :y1, :x2, :y2)");
 		$result_insert->bindParam(':s_id', $s_id);
