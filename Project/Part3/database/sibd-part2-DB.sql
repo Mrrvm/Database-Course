@@ -318,3 +318,37 @@ insert into Region values(07, 01, 07.7, 0.3, 0.75, 0.35);
 insert into Region values(10, 01, 0.2, 0.5, 0.35, 0.6);
 insert into Region values(12, 01, 0.3, 0.5, 0.35, 0.55);
 insert into Region values(13, 01, 0.5, 0.8, 0.6, 0.85);
+
+delimiter $$
+
+drop trigger if exists check_doctor_insert;
+
+drop trigger if exists check_doctor_update;
+
+drop trigger if exists overlapping_periods_insert;
+
+drop trigger if exists overlapping_periods_update;
+
+drop function if exists region_overlaps_element;
+
+delimiter $$
+
+CREATE FUNCTION region_overlaps_element(s_id integer, s_index integer, x1_B numeric(20,2),
+                                    y1_B numeric(20,2), x2_B numeric(20,2), y2_B numeric(20,2))
+RETURNS integer
+BEGIN
+    IF EXISTS (SELECT   x1, y1, x2, y2
+                FROM    Region
+                WHERE   series_id = s_id
+                        AND elem_index = s_index
+                        AND (x2_B <= x1
+                            OR x1_B >= x2
+                            OR y2_B <= y1
+                            OR y1_B >= y2)) THEN
+        RETURN 0;
+    ELSE
+        RETURN 1;
+    END IF;
+END$$
+
+delimiter ;
