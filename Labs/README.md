@@ -31,3 +31,56 @@ Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/
 </a>
 
 ## Lab 3
+### Conversion of E-R models to Relational Models
+Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab03_en.pdf).
+#### Exercise 1
+
+**author**(<ins>name</ins>, <ins>address</ins>, URL)
+
+**book**(<ins>ISB</ins>, price, title, year)
+
+**publisher**(<ins>name</ins>, address, URL, phone)
+
+**customer**(<ins>email</ins>, name, address, phone)
+
+**shopping-basket**(<ins>basketID</ins>)
+
+**warehhouse**(<ins>code</ins>, address, phone)
+
+**written_by**(<ins>name</ins>, <ins>address</ins>, <ins>ISB</ins>)
+
+&nbsp;&nbsp; name: FK(author)
+
+&nbsp;&nbsp; address: FK(author)
+  
+&nbsp;&nbsp; ISB: FK(book)
+
+**published_by**(<ins>name</ins>, <ins>ISB</ins>)
+
+&nbsp;&nbsp; name: FK(publisher)
+
+&nbsp;&nbsp; ISB: FK(book)
+
+**contains**(<ins>ISB</ins>, <ins>basketID</ins>, number)
+
+&nbsp;&nbsp; ISB: FK(book)
+
+&nbsp;&nbsp; basketID: FK(shopping-basket)
+
+**basket-of**(<ins>email</ins>, <ins>basketID</ins>)
+
+&nbsp;&nbsp; basketID: FK(shopping-basket)
+
+&nbsp;&nbsp; email: FK(customer)
+
+**stocks**(<ins>ISB</ins>, <ins>code</ins>, number)
+
+&nbsp;&nbsp; ISB: FK(book)
+
+&nbsp;&nbsp; code: FK(warehouse)
+
+#### Exercise 2
+
+
+
+
