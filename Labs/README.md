@@ -1,6 +1,45 @@
 # Labs resolutions
 (This might not be completely correct)
 
+- [Lab 1](#lab-1)
+- [Lab 2](#lab-2)
+  * [E-R models](#e-r-models)
+    + [Exercise 1](#exercise-1)
+    + [Exercise 2](#exercise-2)
+    + [Exercise 3](#exercise-3)
+    + [Exercise 4](#exercise-4)
+- [Lab 3](#lab-3)
+  * [Conversion of E-R models to Relational Models](#conversion-of-e-r-models-to-relational-models)
+    + [Exercise 1](#exercise-1-1)
+    + [Exercise 2](#exercise-2-1)
+    + [Exercise 3](#exercise-3-1)
+    + [Exercise 4](#exercise-4-1)
+    + [Notes](#notes)
+- [Lab 4](#lab-4)
+  * [Introduction to SQL](#introduction-to-sql)
+    + [PART I: Some basic experiments](#part-i--some-basic-experiments)
+    + [Exercise 8](#exercise-8)
+    + [Exercise 9](#exercise-9)
+    + [Exercise 10](#exercise-10)
+    + [Exercise 12](#exercise-12)
+    + [Exercise 13](#exercise-13)
+    + [Exercise 14](#exercise-14)
+    + [Exercise 15](#exercise-15)
+    + [PART II: Querying the database](#part-ii--querying-the-database)
+    + [Exercise 1](#exercise-1-2)
+    + [Exercise 2](#exercise-2-2)
+    + [Exercise 3](#exercise-3-2)
+    + [Exercise 4](#exercise-4-2)
+    + [Exercise 5](#exercise-5)
+    + [Exercise 6](#exercise-6)
+    + [Exercise 7](#exercise-7)
+    + [Exercise 8](#exercise-8-1)
+    + [Exercise 9](#exercise-9-1)
+    + [Notes](#notes-1)
+- [Lab 5](#lab-5)
+  * [SQL Queries](#sql-queries)
+
+
 ## Lab 1 
 Upload a database as such to a server. Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab01_en.pdf). The files are in `lab1/`.
 <a>
@@ -242,7 +281,7 @@ last_name, street_number, ..., city, ...)
 ## Lab 4
 ### Introduction to SQL
 Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab04_en.pdf).
-This follows the database created on [Lab1]().
+This follows the database created on [Lab1](#lab-1).
 
 #### PART I: Some basic experiments
 #### Exercise 8
@@ -266,7 +305,7 @@ Same as 10. We get less columns shown.
 #### Exercise 15
 Define which account number we want, from depositor or from account.
 
-#### PART I: Querying the database
+#### PART II: Querying the database
 #### Exercise 1
 ```
 SELECT customer_name
@@ -401,10 +440,16 @@ AND borrower.customer_name = depositor.customer_name;
 	| Hayes         |
 	+---------------+
 
+#### Notes
+- Use % for any substring, e.g. 'Perry%' (everything starting with Perry)
+- Use _ for any single character, e.g. ___ (everything with only 3 letters)
 
+## Lab 5
+### SQL Queries
+Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab05_en.pdf).
+This follows the database created on [Lab1](#lab-1).
 
-
-
+#### Exercise 1
 
 
 
