@@ -294,7 +294,7 @@ Alike 8, it selects the product of the tables with a condition: account_number f
 Natural joinmatches automatically columns with the same name and keeps only one of them, so in this case it will join the account_numbers if they are ambiguous. So practically, we get one less column using this.
 
 #### Exercise 12
-7*7*13
+7 x 7 x 13
 
 #### Exercise 13
 Now the customer names between depositor and customer must match, so we'll get the street and the city where they live in.
@@ -450,10 +450,277 @@ Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/
 This follows the database created on [Lab1](#lab-1).
 
 #### Exercise 1
+```
+SELECT COUNT(distinct customer.customer_name)
+FROM branch, loan, borrower, customer
+WHERE branch.branch_name = loan.branch_name
+AND loan.loan_number = borrower.loan_number
+AND borrower.customer_name = customer.customer_name
+AND customer.customer_city = branch.branch_city;
+```
+	+---------------+----------------------------------------+
+	| customer_name | count(distinct customer.customer_name) |
+	+---------------+----------------------------------------+
+	| Jackson       |                                      1 |
+	+---------------+----------------------------------------+
+	
+#### Exercise 2
+```
+SELECT customer_name, AVG(balance)
+FROM account, depositor
+WHERE account.account_number = depositor.account_number
+GROUP BY customer_name;
+```
+	+---------------+----------------------+
+	| customer_name | AVG(account.balance) |
+	+---------------+----------------------+
+	| Hayes         |           400.000000 |
+	| Johnson       |           700.000000 |
+	| Jones         |           750.000000 |
+	| Lindsay       |           700.000000 |
+	| Smith         |           700.000000 |
+	| Turner        |           350.000000 |
+	+---------------+----------------------+
+	
+#### Exercise 3
+```
+SELECT customer_name, AVG(balance)
+FROM account, depositor, branch
+WHERE account.account_number = depositor.account_number
+AND branch.branch_name = account.branch_name
+AND branch_city = "Horseneck"
+GROUP BY customer_name;
+```
+	+---------------+--------------+
+	| customer_name | AVG(balance) |
+	+---------------+--------------+
+	| Hayes         |   400.000000 |
+	| Smith         |   700.000000 |
+	| Turner        |   350.000000 |
+	+---------------+--------------+
+
+#### Exercise 4
+```
+SELECT SUM(balance)
+FROM account, branch
+WHERE branch.branch_name = account.branch_name
+AND branch_city = "Horseneck";
+```
+	+-------------+----------------------+
+	| branch_city | SUM(account.balance) |
+	+-------------+----------------------+
+	| Horseneck   |              1450.00 |
+	+-------------+----------------------+
+
+#### Exercise 5
+```
+SELECT branch_city, SUM(balance)
+FROM branch, account
+WHERE branch.branch_name = account.branch_name
+GROUP BY branch_city;
+```
+	+-------------+----------------------+
+	| branch_city | SUM(account.balance) |
+	+-------------+----------------------+
+	| Brooklyn    |              2150.00 |
+	| Horseneck   |              1450.00 |
+	| Palo Alto   |               700.00 |
+	+-------------+----------------------+
+	
+#### Exercise 6
+```
+SELECT branch_name
+FROM loan
+GROUP BY branch_name
+HAVING COUNT(loan_number) >= 2
+ORDER BY branch_name;
+```
+	+-------------+
+	| branch_name |
+	+-------------+
+	| Downtown    |
+	| Perryridge  |
+	+-------------+
+	
+#### Exercise 7
+```
+SELECT branch_name, SUM(amount)
+FROM loan
+GROUP BY branch_name
+HAVING COUNT(loan_number) >= 2
+ORDER BY branch_name;
+```
+	+-------------+-------------+
+	| branch_name | SUM(amount) |
+	+-------------+-------------+
+	| Downtown    |     2500.00 |
+	| Perryridge  |     2800.00 |
+	+-------------+-------------+
+
+#### Exercise 8 (OUTER JOIN)
+```
+SELECT branch.branch_name, branch_city, account_number
+FROM branch 
+LEFT OUTER JOIN account
+ON branch.branch_name = account.branch_name
+WHERE account.account_number IS NULL;
+```
+	+-------------+-------------+
+	| branch_city | branch_name |
+	+-------------+-------------+
+	| Bennington  | Pownal      |
+	| Rye         | North Town  |
+	+-------------+-------------+
+
+#### Exercise 9
+```
+SELECT customer_name
+FROM customer
+WHERE customer_name NOT IN (
+	SELECT customer_name
+	FROM account
+	INNER JOIN depositor
+	ON account.account_number = depositor.account_number);
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Adams         |
+	| Brooks        |
+	| Curry         |
+	| Glenn         |
+	| Green         |
+	| Jackson       |
+	| Williams      |
+	+---------------+
+	
+#### Exercise 10
+```
+SELECT branch.branch_name 
+FROM branch 
+WHERE branch_name 
+NOT IN (SELECT branch.branch_name
+	FROM branch
+	INNER JOIN loan
+	ON branch.branch_name = loan.branch_name
+	UNION
+	SELECT branch.branch_name
+	FROM branch
+	INNER JOIN account
+	ON branch.branch_name = account.branch_name);
+
+```
+	+-------------+
+	| branch_name |
+	+-------------+
+	| North Town  |
+	| Pownal      |
+	+-------------+
+
+#### Exercise 11
+```
+SELECT branch.branch_name 
+FROM branch 
+WHERE branch_name 
+NOT IN (SELECT branch.branch_name
+	FROM branch
+	INNER JOIN loan
+	ON branch.branch_name = loan.branch_name
+	WHERE branch.branch_name 
+	IN (SELECT branch.branch_name
+	    FROM branch
+	    INNER JOIN account
+	    ON branch.branch_name = account.branch_name));
+```
+	+-------------+
+	| branch_name |
+	+-------------+
+	| Brighton    |
+	| North Town  |
+	| Pownal      |
+	+-------------+
+
+#### Exercise 12
+```
+SELECT customer_name
+FROM customer
+WHERE customer_city IN (SELECT distinct branch_city
+			FROM branch);
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Brooks        |
+	| Curry         |
+	| Jackson       |
+	| Johnson       |
+	| Smith         |
+	+---------------+
+
+#### Exercise 13
+```
+SELECT loan_number, amount
+FROM loan
+WHERE amount > ALL (SELECT amount
+		     FROM loan);
+```
+	+-------------+---------+
+	| loan_number | amount  |
+	+-------------+---------+
+	| L-23        | 2000.00 |
+	+-------------+---------+
 
 
+#### Exercise 14
+```
+SELECT customer_name, SUM(amount)
+FROM loan
+INNER JOIN borrower
+ON borrower.loan_number = loan.loan_number
+GROUP BY customer_name;
+```
+	+---------------+-------------+
+	| customer_name | sum(amount) |
+	+---------------+-------------+
+	| Adams         |     1300.00 |
+	| Curry         |      500.00 |
+	| Hayes         |     1500.00 |
+	| Jackson       |     1500.00 |
+	| Jones         |     1000.00 |
+	| Smith         |     2900.00 |
+	| Williams      |     1000.00 |
+	+---------------+-------------+
 
+#### Exercise 15
+```
+SELECT customer_name
+FROM loan
+INNER JOIN borrower
+ON borrower.loan_number = loan.loan_number
+GROUP BY customer_name
+HAVING SUM(amount) >= ALL(SELECT SUM(amount)
+			 FROM loan
+			 INNER JOIN borrower
+			 ON borrower.loan_number = loan.loan_number
+			 GROUP BY customer_name);
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Smith         |
+	+---------------+
 
+#### Notes 
+
+- `COUNT(*)` counts the number of rows (may contain nulls).
+- `INNER JOIN` is the same as using the WHERE clause but more readable.
+- `FULL OUTER JOIN` is not supported in MySQL 5.1, a workaround is the union of `LEFT` and `RIGHT OUTER JOIN`.
+- Set operations: `UNION`, `INTERSECT`, `EXCEPT`. 
+- `UNION` removes duplicates, if you want all, use `UNION ALL`.
+- `INTERSECT` is not supported in MySQL 5.1, a workaround is using the `IN` operator.
+- `EXCEPT` is not supported in MySQL 5.1, a workaround is using the `NOT IN` operator.
+- Nesting operators: `SOME`, `ALL`, `IN`.
+- `SOME` is true  if comparison holds at least once.
 
 
 
