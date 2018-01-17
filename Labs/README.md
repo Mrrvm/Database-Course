@@ -737,5 +737,100 @@ HAVING SUM(amount) >= ALL(SELECT SUM(amount)
 - `SOME` is true  if comparison holds at least once.
 
 
+## Lab 6
+### Advanced SQL
+Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab06_en.pdf).
+This follows the database created on [Lab1](#lab-1).
+
+#### Part I: Customers with accounts in every branch of Brooklyn
+
+#### Exercise 1
+```
+	SELECT branch.branch_name
+	FROM branch
+	WHERE branch_city = "Brooklyn";
+```
+	+-------------+
+	| branch_name |
+	+-------------+
+	| Brighton    |
+	| Downtown    |
+	+-------------+
+
+#### Exercise 2
+```
+	SELECT branch.branch_name, account.account_number
+	FROM branch
+	INNER JOIN account
+	ON branch.branch_name = account.branch_name
+	WHERE branch_city = "Brooklyn";
+```
+
+	+-------------+----------------+
+	| branch_name | account_number |
+	+-------------+----------------+
+	| Brighton    | A-201          |
+	| Brighton    | A-217          |
+	| Downtown    | A-101          |
+	+-------------+----------------+
+
+#### Exercise 3
+```
+	SELECT branch.branch_name, account.account_number, depositor.customer_name
+	FROM branch
+	INNER JOIN account
+	ON branch.branch_name = account.branch_name
+	INNER JOIN depositor
+	ON account.account_number = depositor.account_number
+	WHERE branch_city = "Brooklyn";
+```
+	+-------------+----------------+---------------+
+	| branch_name | account_number | customer_name |
+	+-------------+----------------+---------------+
+	| Brighton    | A-201          | Johnson       |
+	| Brighton    | A-217          | Jones         |
+	| Downtown    | A-101          | Johnson       |
+	+-------------+----------------+---------------+
+
+#### Exercise 4
+
+No. A count could be done to check that, but having to show the branch name and account number doesn't 
+allow that since there would have to be a `GROUP BY customer_name`. 
+
+
+#### Exercise 5
+```
+SELECT DISTINCT customer_name
+FROM depositor AS d
+WHERE NOT EXISTS (SELECT branch_name
+		  FROM branch AS b
+		  WHERE branch_ity = "Brooklyn"
+		  AND branch_name NOT IN (SELECT branch_name
+		  			  FROM account AS a, depositor AS d2
+					  WHERE a.account_number = d2.account_number
+					  AND d2.customer_name = d.customer_name));
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Johnson       |
+	+---------------+
+	
+#### Exercise 6
+The third select in the query returns the branches where that customer has accounts.
+The second returns all the branches that are in Brooklyn and in which the client does not  is TRUEhave accounts.
+If a subquery returns any rows at all, `EXISTS` subquery is TRUE, and `NOT EXISTS` subquery is FALSE.
+If the customer has branches everywhere, the second query will be `NULL`, and therefore `NOT EXISTS` is TRUE.
+
+
+
+
+
+
+
+
+
+
+
 
 
