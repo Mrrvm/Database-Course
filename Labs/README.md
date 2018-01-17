@@ -38,7 +38,22 @@
     + [Notes](#notes-1)
 - [Lab 5](#lab-5)
   * [SQL Queries](#sql-queries)
-
+    + [Exercise 1](#exercise-1-3)
+    + [Exercise 2](#exercise-2-3)
+    + [Exercise 3](#exercise-3-3)
+    + [Exercise 4](#exercise-4-3)
+    + [Exercise 5](#exercise-5-1)
+    + [Exercise 6](#exercise-6-1)
+    + [Exercise 7](#exercise-7-1)
+    + [Exercise 8 (OUTER JOIN)](#exercise-8--outer-join-)
+    + [Exercise 9](#exercise-9-2)
+    + [Exercise 10](#exercise-10-1)
+    + [Exercise 11](#exercise-11)
+    + [Exercise 12](#exercise-12-1)
+    + [Exercise 13](#exercise-13-1)
+    + [Exercise 14](#exercise-14-1)
+    + [Exercise 15](#exercise-15-1)
+    + [Notes](#notes-2)
 
 ## Lab 1 
 Upload a database as such to a server. Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab01_en.pdf). The files are in `lab1/`.
@@ -441,8 +456,8 @@ AND borrower.customer_name = depositor.customer_name;
 	+---------------+
 
 #### Notes
-- Use % for any substring, e.g. 'Perry%' (everything starting with Perry)
-- Use _ for any single character, e.g. ___ (everything with only 3 letters)
+- Use `%` for any substring, e.g. `Perry%` (everything starting with Perry)
+- Use `_` for any single character, e.g. `___` (everything with only 3 letters)
 
 ## Lab 5
 ### SQL Queries
@@ -576,11 +591,10 @@ WHERE account.account_number IS NULL;
 ```
 SELECT customer_name
 FROM customer
-WHERE customer_name NOT IN (
-	SELECT customer_name
-	FROM account
-	INNER JOIN depositor
-	ON account.account_number = depositor.account_number);
+WHERE customer_name NOT IN (SELECT customer_name
+			    FROM account
+			    INNER JOIN depositor
+			    ON account.account_number = depositor.account_number);
 ```
 	+---------------+
 	| customer_name |
@@ -662,7 +676,7 @@ WHERE customer_city IN (SELECT distinct branch_city
 SELECT loan_number, amount
 FROM loan
 WHERE amount > ALL (SELECT amount
-		     FROM loan);
+		    FROM loan);
 ```
 	+-------------+---------+
 	| loan_number | amount  |
@@ -699,10 +713,10 @@ INNER JOIN borrower
 ON borrower.loan_number = loan.loan_number
 GROUP BY customer_name
 HAVING SUM(amount) >= ALL(SELECT SUM(amount)
-			 FROM loan
-			 INNER JOIN borrower
-			 ON borrower.loan_number = loan.loan_number
-			 GROUP BY customer_name);
+			  FROM loan
+			  INNER JOIN borrower
+			  ON borrower.loan_number = loan.loan_number
+			  GROUP BY customer_name);
 ```
 	+---------------+
 	| customer_name |
