@@ -240,7 +240,176 @@ last_name, street_number, ..., city, ...)
 - Aggregation, follow the rules inside and outside
 
 ## Lab 4
-### ​ Introduction​ ​ to​ ​ SQL
+### Introduction to SQL
 Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab04_en.pdf).
+This follows the database created on [Lab1]().
+
+#### PART I: Some basic experiments
+#### Exercise 8
+Selects the product of account per depositor. Account has 7 rows, depositor has  7 rows, so you get 49 rows.   
+
+#### Exercise 9
+Alike 8, it selects the product of the tables with a condition: account_number from account must be the same as account_number from depositor.
+
+#### Exercise 10 
+Natural joinmatches automatically columns with the same name and keeps only one of them, so in this case it will join the account_numbers if they are ambiguous. So practically, we get one less column using this.
+
+#### Exercise 12
+7*7*13
+
+#### Exercise 13
+Now the customer names between depositor and customer must match, so we'll get the street and the city where they live in.
+
+#### Exercise 14
+Same as 10. We get less columns shown.
+
+#### Exercise 15
+Define which account number we want, from depositor or from account.
+
+#### PART I: Querying the database
 #### Exercise 1
+```
+SELECT customer_name
+FROM depositor, account
+WHERE account.account_number = depositor.account_number
+AND balance > 500;
+```
+	+---------------+---------+
+	| customer_name | balance |
+	+---------------+---------+
+	| Johnson       |  900.00 |
+	| Smith         |  700.00 |
+	| Jones         |  750.00 |
+	| Lindsay       |  700.00 |
+	+---------------+---------+
+
+#### Exercise 2
+```
+SELECT customer_city
+FROM loan, borrower, customer
+WHERE amount > 1000 
+AND amount < 2000
+AND borrower.customer_name = customer.customer_name
+AND loan.loan_number = borrower.loan_number;
+```
+	+---------------+---------------+
+	| customer_name | customer_city |
+	+---------------+---------------+
+	| Jackson       | Brooklyn      |
+	| Hayes         | Harrison      |
+	| Adams         | Pittsfield     |
+	+---------------+---------------+
+  
+#### Exercise 3
+```
+SELECT account_name, balance*1.01 as balance
+FROM account
+WHERE branch_name = "Perryridge";
+```
+	+----------------+----------+
+	| account_number | balance  |
+	+----------------+----------+
+	| A-102          | 404.0000 |
+	+----------------+----------+
+  
+#### Exercise 4
+```
+SELECT account.account_number, balance
+FROM account, depositor, customer, borrower
+WHERE loan_number = L-15
+AND account.account_number = depositor.account_number
+AND depositor.customer_name = customer.customer_name
+AND customer.customer_name = borrower.customer_name;
+```
+	+----------------+---------+
+	| account_number | balance |
+	+----------------+---------+
+	| A-102          |  400.00 |
+	+----------------+---------+
+  
+#### Exercise 5
+```
+SELECT customer_name
+FROM branch, branch
+WHERE branch.branch_city = customer.customer_city;
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Brooks        |
+	| Curry         |
+	| Jackson       |
+	| Johnson       |
+	| Smith         |
+	+---------------+
+  
+#### Exercise 6
+```
+SELECT assets 
+FROM branch, account, depositor
+WHERE account.account_number = depositor.account_number
+AND account.branch_name = branch.branch_name
+AND customer_name = "Jones";
+```
+	+------------+
+	| assets     |
+	+------------+
+	| 7100000.00 |
+	+------------+
+  
+#### Exercise 7
+```
+SELECT customer_name, branch_name
+FROM depositor, account
+WHERE customer_name LIKE 'J%s'
+AND depositor.account_number = account.account_number;
+```
+	+---------------+-------------+
+	| customer_name | branch_name |
+	+---------------+-------------+
+	| Jones         | Brighton    |
+	+---------------+-------------+
+  
+#### Exercise 8
+```
+SELECT customer.customer_name, customer_street, loan.loan_number, amount
+FROM loan, borrower, customer
+WHERE customer.customer_name = borrower.customer_name
+AND loan.loan_number = borrower.loan_number
+AND customer_street LIKE '____';
+```
+	+---------------+-----------------+-------------+---------+
+	| customer_name | customer_street | loan_number | amount  |
+	+---------------+-----------------+-------------+---------+
+	| Hayes         | Main            | L-15        | 1500.00 |
+	| Jones         | Main            | L-17        | 1000.00 |
+	+---------------+-----------------+-------------+---------+
+  
+#### Exercise 9
+```
+SELECT distinct customer.customer_name
+FROM loan, account, depositor, borrower
+WHERE loan.branch_name = account.branch_name
+AND account.account_number = depositor.account_number
+AND customer.customer_name  = depositor.customer_name
+AND borrower.loan_number = loan.loan_number
+AND borrower.customer_name = depositor.customer_name;
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Hayes         |
+	+---------------+
+
+
+
+
+
+
+
+
+
+
+
+
 
