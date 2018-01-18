@@ -761,9 +761,9 @@ This follows the database created on [Lab1](#lab-1).
 
 #### Exercise 1
 ```
-	SELECT branch.branch_name
-	FROM branch
-	WHERE branch_city = "Brooklyn";
+SELECT branch.branch_name
+FROM branch
+WHERE branch_city = "Brooklyn";
 ```
 	+-------------+
 	| branch_name |
@@ -774,11 +774,11 @@ This follows the database created on [Lab1](#lab-1).
 
 #### Exercise 2
 ```
-	SELECT branch.branch_name, account.account_number
-	FROM branch
-	INNER JOIN account
-	ON branch.branch_name = account.branch_name
-	WHERE branch_city = "Brooklyn";
+SELECT branch.branch_name, account.account_number
+FROM branch
+INNER JOIN account
+ON branch.branch_name = account.branch_name
+WHERE branch_city = "Brooklyn";
 ```
 
 	+-------------+----------------+
@@ -791,13 +791,13 @@ This follows the database created on [Lab1](#lab-1).
 
 #### Exercise 3
 ```
-	SELECT branch.branch_name, account.account_number, depositor.customer_name
-	FROM branch
-	INNER JOIN account
-	ON branch.branch_name = account.branch_name
-	INNER JOIN depositor
-	ON account.account_number = depositor.account_number
-	WHERE branch_city = "Brooklyn";
+SELECT branch.branch_name, account.account_number, depositor.customer_name
+FROM branch
+INNER JOIN account
+ON branch.branch_name = account.branch_name
+INNER JOIN depositor
+ON account.account_number = depositor.account_number
+WHERE branch_city = "Brooklyn";
 ```
 	+-------------+----------------+---------------+
 	| branch_name | account_number | customer_name |
@@ -951,6 +951,117 @@ WHERE d1.customer_name = c.customer_name
 ```
 
 This should return an **Empty set**.
+
+## Lab 7
+### Functions, Stored Procedures and Triggers
+Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab07.pdf).
+This follows the database created on [Lab1](#lab-1).
+
+#### Part I: Functions
+
+#### Exercise 1
+
+```
+DELIMITER $$
+CREATE FUNCTION get_absolute_balance(name VARCHAR(255))
+RETURNS INT
+BEGIN
+	DECLARE positive_balance INT;
+	DECLARE negative_balance INT;
+	SELECT SUM(balance) INTO positive_balance, 
+	FROM account NATURAL JOIN depositor
+	WHERE customer_name = name;
+	
+	SELECT SUM(amount)INTO negative_balance
+	FROM loan NATURAL JOIN borrower
+	WHERE customer_name = name;
+	
+	RETURN positive_balance - negative balance;
+	
+END$$
+DELIMITER ;
+```
+
+
+#### Exercise 3
+
+```
+SELECT customer_name 
+FROM customer 
+WHERE absolute_balance(customer_name) >= ALL (SELECT get_absolute_balance(customer_name) 
+					      FROM customer);
+
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Jones         |
+	+---------------+
+
+
+#### Part II: Stored Procedures
+
+#### Exercise 4
+
+```
+DELIMITER $$
+CREATE PROCEDURE get_branch_customers(in b_name VARCHAR(255), out customers )
+BEGIN
+	DROP TABLE temp IF EXISTS;
+        CREATE TABLE temp (tname varchar(255), primary key(tname));
+	INSERT INTO temp (SELECT customer_name INTO 
+			  FROM depositor AS d, account AS a
+			  WHERE d.account_number = a.account_number
+			  AND a.branch_name = b_name);
+END$$
+DELIMITER ;
+```
+
+#### Part III: Triggers
+#### Exercise 6
+```
+DELIMITER $$
+CREATE TRIGGER check_loan BEFORE UPDATE ON loan
+FOR EACH ROW
+BEGIN
+	IF new.amount < 0 THEN
+		INSERT INTO account VALUES (new.loan_number, new.branch_name, (-1)*new.amount);
+		INSERT INTO depositor (SELECT customer_name, loan_number
+				       FROM borrower AS b
+			               WHERE b.loan_number = new.loan_number);
+		SET new.amount = 0;
+	END IF;
+END$$
+DELIMITER ;
+```
+
+#### Notes 
+Function 
+- Parameters: only input
+- Outputs: single return value
+- Returned by `RETURN`
+- Changes table data
+- Invoked by `SELECT` and `WHERE`
+
+Procedure
+- Parameters: in, out, inout
+- Outputs: variables, tables 
+- Returned by `SET`, `CALL` and `SELECT`
+- Changes table data and structure
+- Invoked by `CALL`
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
