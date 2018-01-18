@@ -45,7 +45,7 @@
     + [Exercise 5](#exercise-5-1)
     + [Exercise 6](#exercise-6-1)
     + [Exercise 7](#exercise-7-1)
-    + [Exercise 8 (OUTER JOIN)](#exercise-8--outer-join-)
+    + [Exercise 8](#exercise-8-2)
     + [Exercise 9](#exercise-9-2)
     + [Exercise 10](#exercise-10-1)
     + [Exercise 11](#exercise-11)
@@ -54,6 +54,21 @@
     + [Exercise 14](#exercise-14-1)
     + [Exercise 15](#exercise-15-1)
     + [Notes](#notes-2)
+- [Lab 6](#lab-6)
+  * [Advanced SQL](#advanced-sql)
+    + [Part I: Customers with accounts in every branch of Brooklyn](#part-i--customers-with-accounts-in-every-branch-of-brooklyn)
+    + [Exercise 1](#exercise-1-4)
+    + [Exercise 2](#exercise-2-4)
+    + [Exercise 3](#exercise-3-4)
+    + [Exercise 4](#exercise-4-4)
+    + [Exercise 5](#exercise-5-2)
+    + [Exercise 6](#exercise-6-2)
+    + [Exercise 7](#exercise-7-2)
+    + [Part II: Customers with accounts in every branch of the city where they live](#part-ii--customers-with-accounts-in-every-branch-of-the-city-where-they-live)
+    + [Exercise 8](#exercise-8-3)
+    + [Exercise 9](#exercise-9-3)
+    + [Exercise 10](#exercise-10-2)
+    + [Exercise 11](#exercise-11-1)
 
 ## Lab 1 
 Upload a database as such to a server. Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab01_en.pdf). The files are in `lab1/`.
@@ -572,7 +587,7 @@ ORDER BY branch_name;
 	| Perryridge  |     2800.00 |
 	+-------------+-------------+
 
-#### Exercise 8 (OUTER JOIN)
+#### Exercise 8
 ```
 SELECT branch.branch_name, branch_city, account_number
 FROM branch 
@@ -848,7 +863,7 @@ Since its FALSE, the result of the second query is NULL and the first query gets
 Second query represents a table (1) with all the Brooklyn branches, third query represents a table (2) with all the branches in Brooklyn where the cusstomer has accounts. `NOT EXISTS` will look for the first instance of table (1) that doesn't exist on table (2), and return TRUE if that is the case, i.e. there are rows that exist in table (1) and not in table (2). 
 
 
-#### Part I: Customers with accounts in every branch of the city where they live
+#### Part II: Customers with accounts in every branch of the city where they live
 
 #### Exercise 8
 
@@ -902,7 +917,7 @@ WHERE c.customer_name = d.customer_name
 +---------------+---------------+-------------+
 | Hayes         | Harrison      | Horseneck   |
 | Jones         | Harrison      | Brooklyn    |
-| Lindsay       | Pittsfield    | Palo Alto   |
+| Lindsay       | Pittsfield     | Palo Alto   |
 | Turner        | Stamford      | Horseneck   |
 +---------------+---------------+-------------+
 ```
