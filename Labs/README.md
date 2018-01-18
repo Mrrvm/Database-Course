@@ -818,12 +818,28 @@ WHERE NOT EXISTS (SELECT branch_name
 	
 #### Exercise 6
 The third select in the query returns the branches where that customer has accounts.
-The second returns all the branches that are in Brooklyn and in which the client does not  is TRUEhave accounts.
+The second returns all the branches that are in Brooklyn and in which the client does not have accounts.
 If a subquery returns any rows at all, `EXISTS` subquery is TRUE, and `NOT EXISTS` subquery is FALSE.
 If the customer has branches everywhere, the second query will be `NULL`, and therefore `NOT EXISTS` is TRUE.
 
-
-
+#### Exercise 6
+```
+SELECT DISTINCT customer_name 
+FROM depositor AS d 
+WHERE NOT EXISTS (SELECT branch_name 
+		  FROM branch AS b 
+		  WHERE branch_city = "Brooklyn" 
+		  AND NOT EXISTS (SELECT branch_name 
+		  		  FROM account AS a, depositor AS d2 
+				  WHERE a.account_number = d2.account_number
+				  AND d2.customer_name = d.customer_name 
+				  AND branch_name = b.branch_name));
+```
+	+---------------+
+	| customer_name |
+	+---------------+
+	| Johnson       |
+	+---------------+
 
 
 
