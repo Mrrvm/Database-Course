@@ -848,6 +848,10 @@ Since its FALSE, the result of the second query is NULL and the first query gets
 Second query represents a table (1) with all the Brooklyn branches, third query represents a table (2) with all the branches in Brooklyn where the cusstomer has accounts. `NOT EXISTS` will look for the first instance of table (1) that doesn't exist on table (2), and return TRUE if that is the case, i.e. there are rows that exist in table (1) and not in table (2). 
 
 
+#### Part I: Customers with accounts in every branch of the city where they live
+
+#### Exercise 8
+
 
 
 
