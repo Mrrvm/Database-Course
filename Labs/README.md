@@ -1081,14 +1081,108 @@ Procedure
 - Changes table data and structure
 - Invoked by `CALL`
 
+## Lab 9
+### PHP and MySQL
+
+#### Notes
+
+- GET
+	- Page reload: Harmless
+	- Can be bookmarked
+	- Can be cached
+	- Parameters remain in history
+	- Data size limited to the length of the URL
+	- Restricted to ASCII
+	- Less secure
+
+- POST
+	- Page reload: data will be submitted again
+	- Can't be bookmarked
+	- Not cached
+	- Parameters are not saved in history
+	- No data size restrictions
+	- Binary data can be sent 
+	- Safer, because parameters aren't stored in history/logs
+
+- `$_REQUEST`, by default, contains the contents of `$_GET`, `$_POST` and `$_COOKIE`. 
+
+- SQL Injection
+
+	Can be done in different ways, check [W3SCHOOLS](https://www.w3schools.com/sql/sql_injection.asp).
+	- username: " or ""="
+	
+	```
+	SELECT * FROM users WHERE username ="" or ""="";
+	```
+	The SQL above is valid and will return all rows from the "users" table, since OR ""="" is always TRUE.
+	
+	- balance: 400); DROP TABLE depositor;
+	```
+	INSERT INTO account VALUES ('A-125, 'Perryridge', 400); DROP TABLE depositor;
+	```
+	
+	- id: 105 OR 1=1
+	```
+	SELECT UserId, Name, Password FROM Users WHERE UserId = 105 or 1=1; 
+	```
+	
+	Use prepared statements to protect against it:
+	```
+	$account_number = $_REQUEST['account_number'];
+	$stat = $connection->prepare("SELECT balance FROM account WHERE account_number=:account_number");
+	$stat->bindParam(':account_number', $account_number);
+	$stat->execute();
+	```
+
+
+## Lab 10
+### Transactions
+
+#### Notes
+
+Some operations have ACID (atomicity, consistency, isolation, durability) properties, for example transfering money from 
+one account to another. For that explicit transactions are required. 
+
+Transactions have different isolation levels, that can be chosen:
+- serializable (same value and same number of records during transaction)
+- repeatable read (same value and different number of records during transaction) - default
+- read committed (different value and different number of records during transaction)
+- read uncommitted (different value and different number of records during transaction) - dirty read
+
+```
+SET TRANSACTION ISOLATION LEVEL repeatable read;
+START TRANSACTION;
+	UPDATE account
+	SET balance = balance - 50
+	WHERE account_number = 'A-101';
+COMMIT; // or ROLLBACK;
+```
+
+in php:
+
+```
+$connection->beginTransaction();
+$connection->exec($sql);
+$connection->commit();
+//$connection->rollback(); if there's any error
+```
+
+
 ## Lab 11
 ### Data Warehouse
-Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab11.pdf).
+Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab11.pdf). The files are in `lab11/`.
+
+#### Notes
+
+OLAP - Online Analytical Processing
+OLTP - Online Transaction Processing
 
 
+## Final notes
 
+- Queries may be optimized by using hash keys for indexing or binary trees.
 
-You made it! Here's a meme
+<h1>You made it! Here's a meme</h1>
 
 <a>
   <img src="https://images-cdn.9gag.com/photo/ayDKNrX_700b.jpg">
