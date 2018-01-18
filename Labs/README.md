@@ -1,5 +1,5 @@
 # Labs resolutions
-(This might not be completely correct)
+(This might not be completely correct. Exercises that aren't listed are just follow-throughs.)
 
 - [Lab 1](#lab-1)
 - [Lab 2](#lab-2)
@@ -1016,6 +1016,19 @@ BEGIN
 END$$
 DELIMITER ;
 ```
+#### Exercise 5
+```
+CALL get_branch_customers("Brighton");
+SELECT * from temp;
+DROP TABLE temp;
+```
+	+---------+
+	| tname   |
+	+---------+
+	| Johnson |
+	| Jones   |
+	+---------+
+
 
 #### Part III: Triggers
 #### Exercise 6
@@ -1035,6 +1048,24 @@ END$$
 DELIMITER ;
 ```
 
+#### Exercise 7
+```
+UPDATE loan SET amount=amount-1200 WHERE loan_number = 'L-17';
+```
+	+----------------+-------------+---------+
+	| account_number | branch_name | balance |
+	+----------------+-------------+---------+
+	| A-101          | Downtown    |  500.00 |
+	| A-102          | Perryridge  |  400.00 |
+	| A-201          | Brighton    |  900.00 |
+	| A-215          | Mianus      |  700.00 |
+	| A-217          | Brighton    |  750.00 |
+	| A-222          | Redwood     |  700.00 |
+	| A-305          | Round Hill  |  350.00 |
+	| L-17           | Downtown    |  200.00 |
+	+----------------+-------------+---------+
+
+
 #### Notes 
 Function 
 - Parameters: only input
@@ -1050,7 +1081,9 @@ Procedure
 - Changes table data and structure
 - Invoked by `CALL`
 
-
+## Lab 11
+### Data Warehouse
+Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab11.pdf).
 
 
 
