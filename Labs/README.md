@@ -852,9 +852,90 @@ Second query represents a table (1) with all the Brooklyn branches, third query 
 
 #### Exercise 8
 
+**Q: How to formulate using the double negative?**
+
+A: The objective is to find a customer such that there is no branch from the list of branches in the city the user lives in in which he/she does not have an account.
+
+#### Exercise 9
+
+**Q: Change the query from 5 in order to fulfil the required task**
+
+```
+SELECT DISTINCT c.customer_name
+FROM depositor AS d1, customer AS c
+WHERE d1.customer_name = c.customer_name
+    AND NOT EXISTS (
+        SELECT branch_name FROM branch AS b
+        WHERE branch_city = c.customer_city
+            AND NOT EXISTS (
+                SELECT branch_name FROM account AS a, depositor AS d2
+                WHERE a.account_number = d2.account_number
+                    AND d1.customer_name = d2.customer_name
+                    AND branch_name = b.branch_name));
+```
+```
++---------------+
+| customer_name |
++---------------+
+| Hayes         |
+| Jones         |
+| Lindsay       |
+| Turner        |
++---------------+
+```
+
+#### Exercise 10
+
+Run the following query which checks the location of the branch in which the previous customer do have accounts.
+
+```
+SELECT c.customer_name, c.customer_city, b.branch_city
+FROM customer AS c, depositor AS d, account AS a, branch AS b
+WHERE c.customer_name = d.customer_name
+    AND d.account_number = a.account_number
+    AND a.branch_name = b.branch_name
+    AND c.customer_name IN ('Hayes','Jones','Lindsay','Turner');
+```
+```
++---------------+---------------+-------------+
+| customer_name | customer_city | branch_city |
++---------------+---------------+-------------+
+| Hayes         | Harrison      | Horseneck   |
+| Jones         | Harrison      | Brooklyn    |
+| Lindsay       | Pittsfield    | Palo Alto   |
+| Turner        | Stamford      | Horseneck   |
++---------------+---------------+-------------+
+```
+
+**Q: The cities do not match. So what's going on here?**
+
+A: We are indeed unable to find a branch in the city where the customer live in which he/she does not have an account.
+In fact we were **unable to find a branch in that city altogether!**
+So, the double negative presents us with false positive results.
 
 
+#### Exercise 11
 
+**Q: Correct the previous error, by adding an extra condition to the query.**
+
+```
+SELECT DISTINCT c.customer_name
+FROM depositor AS d1, customer AS c
+WHERE d1.customer_name = c.customer_name
+    AND EXISTS (
+      SELECT branch_name FROM customer, branch
+      WHERE c.customer_city = branch.branch_city)
+    AND NOT EXISTS (
+        SELECT branch_name FROM branch AS b
+        WHERE branch_city = c.customer_city
+            AND NOT EXISTS (
+                SELECT branch_name FROM account AS a, depositor AS d2
+                WHERE a.account_number = d2.account_number
+                    AND d1.customer_name = d2.customer_name
+                    AND branch_name = b.branch_name));
+```
+
+This should return an **Empty set**.
 
 
 
