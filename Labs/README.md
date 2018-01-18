@@ -1172,9 +1172,148 @@ $connection->commit();
 ### Data Warehouse
 Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/lab_questions/lab11.pdf). The files are in `lab11/`.
 
+#### Exercise 15
+```
+SELECT AVG(reading), week_day_name
+FROM meter_readings AS m, date_dimension AS d
+WHERE m.date_id = d.date_id
+GROUP BY week_day_name
+WITH ROLLUP;
+```
+	+---------------+---------------+
+	| AVG(reading)  | week_day_name |
+	+---------------+---------------+
+	| 19994178.2400 | Friday        |
+	| 20081069.8697 | Monday        |
+	| 12352433.4305 | Saturday      |
+	| 11617916.9867 | Sunday        |
+	| 20587682.6651 | Thursday      |
+	| 18067392.0244 | Tuesday       |
+	| 19696833.8342 | Wednesday     |
+	| 17415595.8691 | NULL          |
+	+---------------+---------------+
+	
+```
+SELECT AVG(reading), week_day_name
+FROM meter_readings AS m, date_dimension AS d
+WHERE m.date_id = d.date_id
+GROUP BY week_day_name
+HAVING AVG(reading) >= ALL (SELECT AVG(reading)
+				FROM meter_readings AS m, date_dimension AS d
+				WHERE m.date_id = d.date_id
+				GROUP BY week_day_name);
+```
+Thursday
+```
+SELECT AVG(reading), week_day_name
+FROM meter_readings AS m, date_dimension AS d
+WHERE m.date_id = d.date_id
+GROUP BY week_day_name
+HAVING AVG(reading) <= ALL (SELECT AVG(reading)
+				FROM meter_readings AS m, date_dimension AS d
+				WHERE m.date_id = d.date_id
+				GROUP BY week_day_name);
+```
+Sunday
+
+#### Exercise 16
+```
+SELECT AVG(reading), week_number
+FROM meter_readings AS m, date_dimension AS d
+WHERE m.date_id = d.date_id
+AND week_number > 49
+GROUP BY week_number
+WITH ROLLUP;
+```
+	+---------------+-------------+
+	| AVG(reading)  | week_number |
+	+---------------+-------------+
+	| 19989032.7437 |          50 |
+	| 18635923.1146 |          51 |
+	| 12698868.3111 |          52 |
+	| 17082359.0932 |        NULL |
+	+---------------+-------------+
+
+#### Exercise 17
+```
+SELECT AVG(reading), week_number, building_name
+FROM meter_readings AS m, date_dimension AS d, building_dimension as b
+WHERE m.date_id = d.date_id
+AND week_number > 49
+GROUP BY week_number, building_name
+WITH ROLLUP;
+```
+	+---------------+-------------+---------------+
+	| AVG(reading)  | week_number | building_name |
+	+---------------+-------------+---------------+
+	| 19989032.7437 |          50 | A             |
+	| 19989032.7437 |          50 | B             |
+	| 19989032.7437 |          50 | C             |
+	| 19989032.7437 |          50 | D             |
+	| 19989032.7437 |          50 | E             |
+	| 19989032.7437 |          50 | F             |
+	| 19989032.7437 |          50 | G             |
+	| 19989032.7437 |          50 | NULL          |
+	| 18635923.1146 |          51 | A             |
+	| 18635923.1146 |          51 | B             |
+	| 18635923.1146 |          51 | C             |
+	| 18635923.1146 |          51 | D             |
+	| 18635923.1146 |          51 | E             |
+	| 18635923.1146 |          51 | F             |
+	| 18635923.1146 |          51 | G             |
+	| 18635923.1146 |          51 | NULL          |
+	| 12698868.3111 |          52 | A             |
+	| 12698868.3111 |          52 | B             |
+	| 12698868.3111 |          52 | C             |
+	| 12698868.3111 |          52 | D             |
+	| 12698868.3111 |          52 | E             |
+	| 12698868.3111 |          52 | F             |
+	| 12698868.3111 |          52 | G             |
+	| 12698868.3111 |          52 | NULL          |
+	| 17082359.0932 |        NULL | NULL          |
+	+---------------+-------------+---------------+
+
+#### Exercise 18
+```
+SELECT AVG(reading), building_name
+FROM meter_readings AS m, building_dimension as b
+GROUP BY building_name
+ORDER BY AVG(reading) asc;
+```
+	+---------------+---------------+
+	| AVG(reading)  | building_name |
+	+---------------+---------------+
+	| 17415595.8691 | A             |
+	| 17415595.8691 | B             |
+	| 17415595.8691 | C             |
+	| 17415595.8691 | D             |
+	| 17415595.8691 | E             |
+	| 17415595.8691 | F             |
+	| 17415595.8691 | G             |
+	+---------------+---------------+
+
+#### Exercise 19
+```
+SELECT AVG(reading), building_name, day_period
+FROM meter_readings AS m, building_dimension as b, time_dimension as t
+GROUP BY building_name, day_period
+ORDER BY building_name, AVG(reading) desc;
+```
+
+#### Exercise 20
+```
+SELECT AVG(reading), building_name, day_period, hour_of_day
+FROM meter_readings AS m, building_dimension as b, time_dimension as t
+GROUP BY building_name, day_period, hour_of_day
+ORDER BY building_name, AVG(reading) desc;
+```
+
+Exercise 19 and 20 were extremely slow when executing, so they are not tested! Make an issue if you can.
+
 #### Notes
 
 OLAP - Online Analytical Processing
+
 OLTP - Online Transaction Processing
 
 
