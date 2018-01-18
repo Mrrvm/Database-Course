@@ -1350,8 +1350,6 @@ OLTP - Online Transaction Processing
 
 - Queries may be optimized by using hash keys for indexing or binary trees.
 
-<h1>You made it! Here's a meme</h1>
-
 <a>
   <img src="https://images-cdn.9gag.com/photo/ayDKNrX_700b.jpg">
 </a>
