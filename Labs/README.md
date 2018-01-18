@@ -1088,7 +1088,11 @@ Check the [questions](https://github.com/Mrrvm/Database-Course/blob/master/Labs/
 
 
 
+You made it! Here's a meme
 
+<a>
+  <img src="https://images-cdn.9gag.com/photo/ayDKNrX_700b.jpg">
+</a>
 
 
 
